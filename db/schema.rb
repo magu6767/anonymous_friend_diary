@@ -48,9 +48,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_133716) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "friend_requests", "receivers"
-  add_foreign_key "friend_requests", "senders"
-  add_foreign_key "friendships", "user1s"
-  add_foreign_key "friendships", "user2s"
+  add_foreign_key "friend_requests", "users", column: "receiver_id"
+  add_foreign_key "friend_requests", "users", column: "sender_id"
+  add_foreign_key "friendships", "users", column: "user1_id"
+  add_foreign_key "friendships", "users", column: "user2_id"
   add_foreign_key "posts", "users"
 end

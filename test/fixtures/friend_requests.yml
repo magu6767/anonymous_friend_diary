@@ -1,11 +1,4 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
+one_request:
   sender: one
-  receiver: one
-  status: 1
-
-two:
-  sender: two
   receiver: two
   status: 1
