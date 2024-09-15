@@ -1,11 +1,11 @@
 one:
   email: user_one@example.com
-  username: user_one
+  name: user_one
   password_digest: <%= User.digest('password') %>
   bio: User One's bio
 
 two:
   email: user_two@example.com
-  username: user_two
+  name: user_two
   password_digest: <%= User.digest('password') %>
   bio: User Two's bio

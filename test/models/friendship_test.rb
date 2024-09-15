@@ -2,8 +2,8 @@ require "test_helper"
 
 class FriendshipTest < ActiveSupport::TestCase
   def setup
-    @user1 = User.create(email: "user1@example.com", password: "password", username: "user1")
-    @user2 = User.create(email: "user2@example.com", password: "password", username: "user2")
+    @user1 = User.create(email: "user1@example.com", password: "password", name: "user1")
+    @user2 = User.create(email: "user2@example.com", password: "password", name: "user2")
     @friendship = Friendship.new(user1: @user1, user2: @user2)
   end
 

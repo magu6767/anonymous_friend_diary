@@ -22,9 +22,11 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      reset_session # ログイン時にセッションをリセット
+      log_in @user
+      flash[:success] = 'Welcome to the Sample App!'
+      redirect_to @user
     else
       render :new
     end
@@ -53,6 +55,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :username, :password, :password_confirmation)
+      params.require(:user).permit(:email, :name, :password, :password_confirmation)
     end
 end

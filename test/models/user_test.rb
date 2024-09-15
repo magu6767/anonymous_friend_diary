@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(email: "test@example.com", password: "password", username: "testuser")
+    @user = User.new(email: "test@example.com", password: "password", name: "testuser")
   end
 
   test "valid user" do
@@ -21,11 +21,11 @@ class UserTest < ActiveSupport::TestCase
     refute duplicate_user.valid?, 'user is valid with a duplicate email'
   end
 
-  test "invalid with duplicate username" do
+  test "invalid with duplicate name" do
     duplicate_user = @user.dup
     duplicate_user.email = "another@example.com"
     @user.save
-    refute duplicate_user.valid?, 'user is valid with a duplicate username'
+    refute duplicate_user.valid?, 'user is valid with a duplicate name'
   end
 
   test "invalid with short password" do
@@ -46,8 +46,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "has many friends" do
-    user1 = User.create(email: "user1@example.com", password: "password", username: "user1")
-    user2 = User.create(email: "user2@example.com", password: "password", username: "user2")
+    user1 = User.create(email: "user1@example.com", password: "password", name: "user1")
+    user2 = User.create(email: "user2@example.com", password: "password", name: "user2")
     Friendship.create(user1: user1, user2: user2)
     assert_includes user1.friends, user2
     assert_includes user2.friends, user1

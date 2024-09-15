@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :friends2, through: :friendships2, source: :user1
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :username, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:password_digest] }
 
   def friends

@@ -2,8 +2,8 @@ require "test_helper"
 
 class FriendRequestTest < ActiveSupport::TestCase
   def setup
-    @sender = User.create(email: "sender@example.com", password: "password", username: "sender")
-    @receiver = User.create(email: "receiver@example.com", password: "password", username: "receiver")
+    @sender = User.create(email: "sender@example.com", password: "password", name: "sender")
+    @receiver = User.create(email: "receiver@example.com", password: "password", name: "receiver")
     @friend_request = FriendRequest.new(sender: @sender, receiver: @receiver)
   end
 
