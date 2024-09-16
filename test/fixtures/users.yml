@@ -3,12 +3,16 @@ one:
   name: user_one
   password_digest: <%= User.digest('password') %>
   bio: User One's bio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 two:
   email: user_two@example.com
   name: user_two
   password_digest: <%= User.digest('password') %>
   bio: User Two's bio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 admin:
   email: admin@example.com
@@ -16,10 +20,15 @@ admin:
   password_digest: <%= User.digest('password') %>
   bio: User Admin's bio
   admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 <% 30.times do |n| %> # Create 30 users
 user_<%= n %>:
   name:  <%= "User#{n}" %>
   email: <%= "user-#{n}@example.com" %>
   password_digest: <%= User.digest('password') %>
+  bio: <%= "User#{n}'s bio" %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 <% end %>
