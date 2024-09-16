@@ -9,3 +9,17 @@ two:
   name: user_two
   password_digest: <%= User.digest('password') %>
   bio: User Two's bio
+
+admin:
+  email: admin@example.com
+  name: user_admin
+  password_digest: <%= User.digest('password') %>
+  bio: User Admin's bio
+  admin: true
+
+<% 30.times do |n| %> # Create 30 users
+user_<%= n %>:
+  name:  <%= "User#{n}" %>
+  email: <%= "user-#{n}@example.com" %>
+  password_digest: <%= User.digest('password') %>
+<% end %>

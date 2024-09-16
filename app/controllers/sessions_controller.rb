@@ -6,9 +6,10 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
+      forwarding_url = session[:forwarding_url] # ログイン前にアクセスしようとしたURLを取得
       reset_session # ログイン時にセッションをリセット
       log_in user
-      redirect_to user # user_url(user)
+      redirect_to forwarding_url || user # ログイン前にアクセスしようとしたURLにリダイレクト
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new', status: :unprocessable_entity

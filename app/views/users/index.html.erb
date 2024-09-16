@@ -1,8 +1,12 @@
 <% provide(:title, "All users") %>
 <h1>All users</h1>
 
-<ul>
+<%# <%= will_paginate %> %>
+
+<ul class="users">
   <% @users.each do |user| %>
-    <li><%= user.name %></li>
+    <li><%= link_to user.name, user_path(user) %></li>
   <% end %>
 </ul>
+
+<%= will_paginate %>
