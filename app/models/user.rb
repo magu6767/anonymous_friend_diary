@@ -34,6 +34,13 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
+  # 渡されたトークンがダイジェストと一致したらtrueを返す
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
   private
 
     # メールアドレスをすべて小文字にする
