@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_16_231813) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_19_135452) do
   create_table "friend_requests", force: :cascade do |t|
     t.integer "sender_id", null: false
     t.integer "receiver_id", null: false
@@ -50,6 +50,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_16_231813) do
     t.string "activation_digest"
     t.boolean "activated", default: false
     t.datetime "activated_at"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
   add_foreign_key "friend_requests", "users", column: "receiver_id"
