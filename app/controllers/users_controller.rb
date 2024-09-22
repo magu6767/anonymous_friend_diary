@@ -12,7 +12,6 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    @user = User.find(params[:id])
   end
 
   # GET /users/new
@@ -22,7 +21,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
   end
 
   # POST /users
@@ -55,24 +53,17 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # 正しいユーザーかどうか確認
-    def correct_user
-      redirect_to(root_url, status: :see_other) unless current_user?(@user) || current_user.admin?
-    end
-
-    # Only allow a trusted parameter "white list" through.
+    # ストロングパラメータ
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                    :password_confirmation)
     end
 
-    # 管理者かどうか確認
-    def admin_user
-      redirect_to(root_url, status: :see_other) unless current_user.admin?
-    end
+
+    # ユーザーの設定
+    def set_user
+      @user = User.find(params[:id])
+    end  
+
 end
