@@ -21,3 +21,11 @@ most_recent:
   content: "Writing a short test"
   created_at: <%= Time.zone.now %>
   user: one
+
+<% 66.times do |n| %>
+test_post_<%= n %>:
+  title: <%= Faker::Lorem.sentence(word_count: 20) %>
+  content: <%= Faker::Lorem.sentence(word_count: 100) %>
+  created_at: <%= 2.hours.ago %>
+  user: one
+<% end %>
