@@ -22,6 +22,18 @@ most_recent:
   created_at: <%= Time.zone.now %>
   user: one
 
+post_by_two:
+  title: "Post by two"
+  content: "This post is by user two"
+  created_at: <%= 1.days.ago %>
+  user: two
+
+post_by_three:
+  title: "Post by three"
+  content: "This post is by user three"
+  created_at: <%= 1.days.ago %>
+  user: three
+
 <% 66.times do |n| %>
 test_post_<%= n %>:
   title: <%= Faker::Lorem.sentence(word_count: 20) %>

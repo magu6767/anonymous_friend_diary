@@ -1,4 +1,4 @@
 one_request:
-  sender: one
-  receiver: two
+  sender: user_1
+  receiver: user_2
   status: 1
