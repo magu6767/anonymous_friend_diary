@@ -6,7 +6,10 @@ class FriendRequestsController < ApplicationController
     sender = current_user
     receiver = User.find_by(id: @post.user_id)
 
-    new_request = FriendRequest.new(sender: sender, receiver: receiver, status: "pending")
+    new_request = FriendRequest.new(sender: sender, 
+                                    receiver: receiver, 
+                                    post: @post,
+                                    status: "pending")
 
     if new_request.save
       flash[:success] = "Friend request sent"

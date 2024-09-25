@@ -1,4 +1,5 @@
 one_request:
-  sender: user_1
-  receiver: user_2
+  sender: for_delete_user_1
+  receiver: for_delete_user_2
+  post: for_delete_post
   status: 1

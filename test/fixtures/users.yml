@@ -31,6 +31,22 @@ admin:
   activated: true
   activated_at: <%= Time.zone.now %>
 
+for_delete_user_1:
+  email: delete-user1@example.com
+  name: delete_user1
+  password_digest: <%= User.digest('password') %>
+  bio: Delete User1's bio
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
+for_delete_user_2:
+  email: delete-user2@example.com
+  name: delete_user2
+  password_digest: <%= User.digest('password') %>
+  bio: Delete User2's bio
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
 <% 30.times do |n| %> # Create 30 users
 user_<%= n %>:
   name:  <%= "User#{n}" %>

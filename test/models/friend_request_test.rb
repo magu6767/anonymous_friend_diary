@@ -4,7 +4,8 @@ class FriendRequestTest < ActiveSupport::TestCase
   def setup
     @sender = User.create(email: "sender@example.com", password: "password", name: "sender")
     @receiver = User.create(email: "receiver@example.com", password: "password", name: "receiver")
-    @friend_request = FriendRequest.new(sender: @sender, receiver: @receiver)
+    @post = @receiver.posts.build(title: "Test Title", content: "This is a test post.")
+    @friend_request = FriendRequest.new(sender: @sender, receiver: @receiver, post: @post, status: "pending")
   end
 
   test "valid friend request" do
@@ -18,7 +19,7 @@ class FriendRequestTest < ActiveSupport::TestCase
 
   test "invalid when request already exists" do
     @friend_request.save
-    duplicate_request = FriendRequest.new(sender: @sender, receiver: @receiver)
+    duplicate_request = FriendRequest.new(sender: @sender, receiver: @receiver, post: @post, status: "pending")
     refute duplicate_request.valid?, 'friend request is valid when it already exists'
   end
 
@@ -33,5 +34,9 @@ class FriendRequestTest < ActiveSupport::TestCase
 
   test "belongs to receiver" do
     assert_respond_to @friend_request, :receiver
+  end
+
+  test "belongs to post" do
+    assert_respond_to @friend_request, :post
   end
 end

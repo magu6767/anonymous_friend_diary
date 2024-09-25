@@ -34,6 +34,12 @@ post_by_three:
   created_at: <%= 1.days.ago %>
   user: three
 
+for_delete_post:
+  title: "Post to delete"
+  content: "This post is to be deleted"
+  created_at: <%= 1.days.ago %>
+  user: for_delete_user_2
+
 <% 66.times do |n| %>
 test_post_<%= n %>:
   title: <%= Faker::Lorem.sentence(word_count: 20) %>
