@@ -1,4 +1,8 @@
 <div>
   <h1><%= @post.title %></h1>
   <p><%= @post.content %></p>
+  <%= form_with url: friend_requests_path, method: :post do %>
+    <%= hidden_field_tag :post_id, @post.id %>
+    <%= submit_tag "リクエストを送る", class: "btn btn-primary" %>
+  <% end %>
 </div>

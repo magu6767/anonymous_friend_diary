@@ -40,10 +40,10 @@ for_delete_post:
   created_at: <%= 1.days.ago %>
   user: for_delete_user_2
 
-<% 66.times do |n| %>
+<% 30.times do |n| %>
 test_post_<%= n %>:
   title: <%= Faker::Lorem.sentence(word_count: 20) %>
   content: <%= Faker::Lorem.sentence(word_count: 100) %>
   created_at: <%= 2.hours.ago %>
-  user: one
+  user: test_user_<%= n %>
 <% end %>

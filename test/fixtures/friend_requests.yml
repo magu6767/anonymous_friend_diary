@@ -1,5 +1,29 @@
-one_request:
+for_delete_user_request:
   sender: for_delete_user_1
   receiver: for_delete_user_2
   post: for_delete_post
   status: 1
+
+<% 10.times do |n| %>
+test_request_<%= n %>:
+  sender: one
+  receiver: test_user_<%= n %>
+  post: test_post_<%= n %>
+  status: 0
+<% end %>
+
+<% 10.times do |n| %>
+test_request_<%= n + 10 %>:
+  sender: one
+  receiver: test_user_<%= n %>
+  post: test_post_<%= n %>
+  status: 1
+<% end %>
+
+<% 10.times do |n| %>
+test_request_<%= n + 20 %>:
+  sender: one
+  receiver: test_user_<%= n %>
+  post: test_post_<%= n %>
+  status: 2
+<% end %>

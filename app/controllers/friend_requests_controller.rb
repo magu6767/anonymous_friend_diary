@@ -1,8 +1,13 @@
 class FriendRequestsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: [:index, :create, :destroy]
 
+  def index
+    @sent_friend_requests = current_user.sent_friend_requests
+    @received_friend_requests = current_user.received_friend_requests
+  end
+  
   def create
-    @post = Post.find_by(id: params[:friend_request][:post_id])
+    @post = Post.find_by(id: params[:post_id])
     sender = current_user
     receiver = User.find_by(id: @post.user_id)
 

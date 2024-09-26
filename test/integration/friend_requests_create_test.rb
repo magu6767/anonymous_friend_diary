@@ -12,7 +12,7 @@ class FriendRequestsCreateTest < ActionDispatch::IntegrationTest
       log_in_as(@sender)
       get post_path(@post_by_receiver)
       assert_difference 'FriendRequest.count', 1 do
-        post friend_requests_path, params: { friend_request: { post_id: @post_by_receiver.id } }
+        post friend_requests_path, params:  { post_id: @post_by_receiver.id } 
       end
       assert_redirected_to post_path(@post_by_receiver)
       assert_not flash.empty?

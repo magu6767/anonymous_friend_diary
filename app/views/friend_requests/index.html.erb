@@ -1,0 +1,13 @@
+<h1>送ったリクエスト</h1>
+<% if @sent_friend_requests.any? %>
+  <% @sent_friend_requests.each do |s_request| %>
+    <%= render "sent_friend_request", sent_friend_request: s_request %>
+  <% end %>
+<% end %>
+
+<h1>受け取ったリクエスト</h1>
+<% if @received_friend_requests.any? %>
+  <% @received_friend_requests.each do |r_request| %>
+    <%= render "received_friend_request", received_friend_request: r_request %>
+  <% end %>
+<% end %>
