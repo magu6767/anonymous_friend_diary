@@ -1,1 +1,6 @@
-<%= link_to sent_friend_request.post.title, post_path(sent_friend_request.post) %>
+<div class="friend-request-item">
+  <%= link_to sent_friend_request.post.title, post_path(sent_friend_request.post), class: "friend-request-link" %>
+  <%= form_with url: friend_request_path(sent_friend_request), method: :delete do |f| %>
+    <%= f.submit "リクエストを取り消す", class: "btn btn-danger" %>
+  <% end %>
+</div>

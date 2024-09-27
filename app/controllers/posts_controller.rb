@@ -52,7 +52,7 @@ class PostsController < ApplicationController
   def correct_post
     @post = Post.find(params[:id])
     unless @post.user == current_user
-      flash[:alert] = "You are not authorized to edit this post."
+      flash[:alert] = "You are not authorized to edit or delete this post."
       redirect_to root_url
     end
   end

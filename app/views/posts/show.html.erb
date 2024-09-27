@@ -1,8 +1,16 @@
 <div>
   <h1><%= @post.title %></h1>
   <p><%= @post.content %></p>
-  <%= form_with url: friend_requests_path, method: :post do %>
-    <%= hidden_field_tag :post_id, @post.id %>
-    <%= submit_tag "リクエストを送る", class: "btn btn-primary" %>
+  <% if current_user && current_user == @post.user %>
+    <%= form_with url: post_path, method: :delete do %>
+      <%= submit_tag "削除", class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+  
+  <% if current_user != @post.user && !FriendRequest.where(sender: current_user, post: @post).exists? %>
+    <%= form_with url: friend_requests_path, method: :post do %>
+      <%= hidden_field_tag :post_id, @post.id %>
+      <%= submit_tag "リクエストを送る", class: "btn btn-primary" %>
+    <% end %>
   <% end %>
 </div>
