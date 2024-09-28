@@ -28,6 +28,13 @@ post_by_two:
   created_at: <%= 1.days.ago %>
   user: two
 
+post_by_two_2:
+  title: "Post by two 2"
+  content: "This post is by user two"
+  created_at: <%= 1.days.ago %>
+  user: two
+
+
 post_by_three:
   title: "Post by three"
   content: "This post is by user three"

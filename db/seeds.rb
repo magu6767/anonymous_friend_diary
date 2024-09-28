@@ -30,7 +30,6 @@ end
 # ユーザーの一部を対象にマイクロポストを生成する
 users = User.order(:created_at).take(6)
 50.times do
-  title = Faker::Lorem.sentence(word_count: 5)
   content = Faker::Lorem.sentence(word_count: 5)
-  users.each { |user| user.posts.create!(title: title, content: content) }
+  users.each { |user| user.posts.create!(title: "#{user.name}の投稿", content: content) }
 end

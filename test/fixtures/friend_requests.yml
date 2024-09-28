@@ -4,6 +4,12 @@ for_delete_user_request:
   post: for_delete_post
   status: 1
 
+one_received_request:
+  sender: two
+  receiver: one
+  post: orange
+  status: 0
+
 <% 10.times do |n| %>
 test_request_<%= n %>:
   sender: one

@@ -8,6 +8,8 @@
 <h1>受け取ったリクエスト</h1>
 <% if @received_friend_requests.any? %>
   <% @received_friend_requests.each do |r_request| %>
-    <%= render "received_friend_request", received_friend_request: r_request %>
+    <% if !r_request.rejected? %>
+      <%= render "received_friend_request", received_friend_request: r_request %>
+    <% end %>
   <% end %>
 <% end %>

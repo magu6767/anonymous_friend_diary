@@ -8,8 +8,16 @@ class FriendRequest < ApplicationRecord
   validates :sender_id, uniqueness: { scope: [:receiver_id, :post_id] }
   validate :not_self
   validate :not_friends
-  validate :not_pending
   validate :invalid_post
+
+
+  def accepted?
+    status == 'accepted'
+  end
+
+  def rejected?
+    status == 'rejected'
+  end
 
   private
 
@@ -19,10 +27,6 @@ class FriendRequest < ApplicationRecord
 
   def not_friends
     errors.add(:receiver, 'is already added') if sender.friends.include?(receiver)
-  end
-
-  def not_pending
-    errors.add(:receiver, 'already requested friendship') if receiver.sent_friend_requests.pending.where(receiver: sender).exists?
   end
 
   def invalid_post

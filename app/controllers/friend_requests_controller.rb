@@ -25,6 +25,20 @@ class FriendRequestsController < ApplicationController
     end
   end
 
+  def update
+    request = FriendRequest.find(params[:id])
+    if request.update(status: params[:status])
+      if request.accepted?
+        flash[:success] = "Friend request accepted"
+      elsif request.rejected?
+        flash[:success] = "Friend request rejected"
+      end
+    else
+      flash[:danger] = "Friend request update failed"  
+    end
+    redirect_to friend_requests_path
+  end
+
   def destroy
     FriendRequest.find(params[:id]).destroy
     flash[:success] = "Friend request deleted"
