@@ -33,9 +33,6 @@ module SessionsHelper
 
   # 正しいユーザーかどうか確認
   def correct_user
-    Rails.logger.debug "Current user: #{current_user.inspect}"
-    Rails.logger.debug "@user user: #{@user.inspect}"
-
     redirect_to(root_url, status: :see_other) unless current_user?(@user) || current_user.admin?
   end
 
