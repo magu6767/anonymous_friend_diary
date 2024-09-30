@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:show, :edit, :update]
+  before_action :correct_user,   only: [:edit, :update]
+  before_action :correct_user_or_friend, only: :show
   before_action :admin_user,     only: [:index, :destroy]
 
 
@@ -64,6 +65,10 @@ class UsersController < ApplicationController
     # ユーザーの設定
     def set_user
       @user = User.find(params[:id])
-    end  
+    end
+
+    def correct_user_or_friend
+      redirect_to(root_url, status: :see_other) unless current_user?(@user) || current_user.admin? || current_user.friends.include?(@user)
+    end
 
 end

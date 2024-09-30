@@ -1,3 +1,7 @@
 for_delete_user_friendship:
   user1: for_delete_user_1
   user2: for_delete_user_2
+
+three_and_four:
+  user1: three
+  user2: four

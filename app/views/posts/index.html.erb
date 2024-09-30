@@ -1,10 +1,2 @@
-<% @posts.each do |post| %>
-  <div class="post">
-    <%= link_to post.title, post_path(post) %>
-    <p><%= post.content %></p>
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(post.created_at) %> ago.
-    </span>
-  </div>
-<% end %>
+<%= render @posts %>
 <%= will_paginate @posts %>

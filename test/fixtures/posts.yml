@@ -41,6 +41,12 @@ post_by_three:
   created_at: <%= 1.days.ago %>
   user: three
 
+post_by_four:
+  title: "Post by four"
+  content: "This post is by user four"
+  created_at: <%= 1.days.ago %>
+  user: four
+
 for_delete_post:
   title: "Post to delete"
   content: "This post is to be deleted"

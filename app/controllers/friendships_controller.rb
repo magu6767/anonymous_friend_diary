@@ -2,7 +2,7 @@ class FriendshipsController < ApplicationController
   before_action :logged_in_user, only: [:index, :show, :create, :destroy]
 
   def index
-    @friendships = current_user.friends
+    @friends = current_user.friends
   end
 
   def create

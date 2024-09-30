@@ -2,12 +2,16 @@
 <h1>User Details</h1>
 
 <p><strong>Name:</strong> <%= @user.name %></p>
-<p><strong>Email:</strong> <%= @user.email %></p>
-<!-- Add more user details as needed -->
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if current_user?(@user) %>
+  <p><strong>Email:</strong> <%= @user.email %></p>
+  <%= link_to 'Edit', edit_user_path(@user) %>
+<% end %>
+
 <% if current_user.admin? && !current_user?(@user) %>
     | <%= link_to "Delete", @user, data: { "turbo-method": :delete,
                                           turbo_confirm: "You sure?" } %>
-  <% end %>
+<% end %>
+
+<h1>自分の投稿</h1>
+<%= render @user.posts %>

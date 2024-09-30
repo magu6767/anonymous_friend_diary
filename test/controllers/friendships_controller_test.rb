@@ -13,8 +13,8 @@ class FriendshipsControllerTest < ActionDispatch::IntegrationTest
     log_in_as @for_delete_user_1 
     get friendships_url
     assert_response :success
-    assert_not_nil assigns(:friendships)
-    assert_equal @for_delete_user_1.friends, assigns(:friendships)
+    assert_not_nil assigns(:friends)
+    assert_equal @for_delete_user_1.friends, assigns(:friends)
   end
 
   test "should create friendship" do
