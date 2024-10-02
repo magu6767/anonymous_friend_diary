@@ -29,7 +29,10 @@ class FriendRequestsController < ApplicationController
     request = FriendRequest.find(params[:id])
     if request.update(status: params[:status])
       if request.accepted?
-        flash[:success] = "Friend request accepted"
+        friendship = Friendship.new(user1: request.sender, user2: request.receiver)
+        if friendship.save
+          flash[:success] = "Friend request accepted"
+        end
       elsif request.rejected?
         flash[:success] = "Friend request rejected"
       end

@@ -7,16 +7,16 @@
   <%= link_to received_friend_request.post.title, post_path(received_friend_request.post) %>
 
   <% if received_friend_request.accepted? %>
-    <div class="friend-request-buttons">
-      <%= form_with url: friend_request_path(received_friend_request), method: :patch do |f| %>
-        <%= hidden_field_tag :status, "accepted" %>
-        <%= f.submit "承認", class: "btn btn-primary" %>
-      <% end %>
-      <%= form_with url: friend_request_path(received_friend_request), method: :patch do |f| %>
-        <%= f.submit "拒否", class: "btn btn-danger" %>
-        <%= hidden_field_tag :status, "rejected" %>
-      <% end %>
-  <% else %>
     承認済み
+  <% else %>
+    <div class="friend-request-buttons">
+    <%= form_with url: friend_request_path(received_friend_request), method: :patch do |f| %>
+      <%= hidden_field_tag :status, "accepted" %>
+      <%= f.submit "承認", class: "btn btn-primary" %>
+    <% end %>
+    <%= form_with url: friend_request_path(received_friend_request), method: :patch do |f| %>
+      <%= f.submit "拒否", class: "btn btn-danger" %>
+      <%= hidden_field_tag :status, "rejected" %>
+    <% end %>
   <% end %>
 </div>
