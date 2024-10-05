@@ -27,6 +27,9 @@ class User < ApplicationRecord
     friends1.includes(:friends1) + friends2.includes(:friends2)
   end
 
+  def search_friendship(friend)
+    Friendship.where(user1: self, user2: friend).or(Friendship.where(user1: friend, user2: self)).first
+  end
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)

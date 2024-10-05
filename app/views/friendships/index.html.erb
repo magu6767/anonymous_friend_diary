@@ -1,5 +1,9 @@
+<h1>フレンド一覧</h1>
 <ul class="users">
   <% @friends.each do |friend| %>
     <li><%= link_to friend.name, user_path(friend) %></li>
+    <%= form_with url: friendship_path(current_user.search_friendship(friend)), method: :delete do |f| %>
+      <%= f.submit "削除", class: "btn btn-danger" %>
+    <% end %>
   <% end %>
 </ul>
