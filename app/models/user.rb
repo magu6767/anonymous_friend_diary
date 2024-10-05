@@ -10,19 +10,23 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :sent_friend_requests, class_name: 'FriendRequest', foreign_key: 'sender_id', dependent: :destroy
   has_many :received_friend_requests, -> { where(status: [:pending, :accepted]) }, class_name: 'FriendRequest', foreign_key: 'receiver_id', dependent: :destroy
+  # 送信者（user1）として関与している友達関係のリスト
   has_many :friendships1, class_name: 'Friendship', foreign_key: 'user1_id', dependent: :destroy
+  # 受信者（user2）として関与している友達関係のリスト
   has_many :friendships2, class_name: 'Friendship', foreign_key: 'user2_id', dependent: :destroy
+  # 送信して友達になったユーザー一覧
   has_many :friends1, through: :friendships1, source: :user2
+  # 受信して友達になったユーザー一覧
   has_many :friends2, through: :friendships2, source: :user1
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:password_digest] }
 
-  # ここに問題あり
   def friends
-    (friends1 + friends2).uniq
+    friends1.includes(:friends1) + friends2.includes(:friends2)
   end
+
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
