@@ -1,0 +1,39 @@
+
+.navbar {
+  background-color: #FFD1DC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.navbar-brand {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 1.5rem;
+  color: #FF69B4 !important;
+}
+
+.nav-link {
+  color: #8B4513 !important;
+  font-weight: bold;
+
+  &:hover {
+    color: #FF69B4 !important;
+  }
+}
+
+.btn-new-post {
+  background-color: #FF69B4;
+  border-color: #FF69B4;
+  color: white;
+
+  &:hover {
+    background-color: #FF1493;
+    border-color: #FF1493;
+  }
+}
+
+.dropdown-menu {
+  background-color: #FFF0F5;
+
+  .dropdown-item:hover {
+    background-color: #FFB6C1;
+  }
+}

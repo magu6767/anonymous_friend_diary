@@ -11,9 +11,6 @@ gem "faker",           "2.21.0"
 gem "image_processing",           "1.12.2"
 gem "active_storage_validations", "0.9.8"
 gem "will_paginate",           "3.3.1"
-gem "bootstrap-will_paginate", "1.0.0"
-gem "bootstrap-sass", "3.4.1"
-gem "sassc-rails",     "2.1.2"
 gem "sprockets-rails", "3.4.2"
 gem "importmap-rails", "1.1.5"
 gem "turbo-rails",     "1.4.0"
@@ -22,7 +19,9 @@ gem "jbuilder",        "2.11.5"
 gem "puma",            "5.6.8"
 gem "bootsnap",        "1.16.0", require: false
 gem "sqlite3",         "1.6.1"
-gem "webpacker",       "5.4.4"
+gem "webpacker",       "5.4.4" # 多分使わない
+gem "bootstrap", "~> 5.1.0"
+gem "sassc-rails", ">= 2.1.0"
 
 group :development, :test do
   gem "debug",   "1.7.1", platforms: %i[ mri mingw x64_mingw ]
