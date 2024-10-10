@@ -1,13 +1,14 @@
+// @import "bootstrap-sprockets";
 
 .navbar {
-  background-color: #FFD1DC;
+  background-color: #cbe2b9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
 }
 
 .navbar-brand {
   font-family: 'Comic Sans MS', cursive;
   font-size: 1.5rem;
-  color: #FF69B4 !important;
+  color: #9af381 !important;
 }
 
 .nav-link {
@@ -15,18 +16,18 @@
   font-weight: bold;
 
   &:hover {
-    color: #FF69B4 !important;
+    color: #3cef99 !important;
   }
 }
 
 .btn-new-post {
-  background-color: #FF69B4;
-  border-color: #FF69B4;
+  background-color: #98e4a3;
+  border-color: #0fd680;
   color: white;
 
   &:hover {
-    background-color: #FF1493;
-    border-color: #FF1493;
+    background-color: #55c023;
+    border-color: #2fdf35;
   }
 }
 
@@ -34,6 +35,6 @@
   background-color: #FFF0F5;
 
   .dropdown-item:hover {
-    background-color: #FFB6C1;
+    background-color: #24b335;
   }
 }
