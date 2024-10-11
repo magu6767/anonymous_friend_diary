@@ -2,6 +2,6 @@
   <%= link_to post.title, post_path(post) %>
   <p><%= post.content %></p>
   <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> ago.
+    <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
   </span>
 </div>
