@@ -1,38 +1,42 @@
 .navbar {
-  background-color: #cb5c48;
+  background-color: #FFFFFF;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
 }
 
 .navbar-brand {
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Hiragino Maru Gothic Pro', cursive;
   font-size: 1.5rem;
-  color: #9af381 !important;
+  color: #000 !important;
 }
 
 .nav-link {
-  color: #8B4513 !important;
-  font-weight: bold;
-
+  color: #000 !important;
+  font-family: 'Hiragino Maru Gothic Pro', cursive;
+  
   &:hover {
-    color: #3cef99 !important;
+    color: #000 !important;
   }
 }
 
 .btn-new-post {
-  background-color: #98e4a3;
-  border-color: #0fd680;
-  color: white;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: #FFFFFF;
 
   &:hover {
-    background-color: #55c023;
-    border-color: #2fdf35;
+    background-color: #E6DED5;
+    border-color: #E6DED5;
   }
 }
 
 .dropdown-menu {
-  background-color: #FFF0F5;
+  background-color: #FFFFFF;
 
   .dropdown-item:hover {
-    background-color: #24b335;
+    background-color: #E6DED5;
   }
+}
+
+body {
+  background-color: #E6DED5; // ここで希望の色に変更
 }
