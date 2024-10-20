@@ -1,18 +1,25 @@
-<div>
-  <h1><%= @post.title %></h1>
-  <p><%= @post.content %></p>
-  <% if logged_in? %>
-    <% if current_user && current_user == @post.user %>
-      <%= form_with url: post_path, method: :delete do %>
-        <%= submit_tag "削除", class: "btn btn-primary" %>
-      <% end %>
-    <% elsif !FriendRequest.where(sender: current_user, post: @post).exists? %>
-      <%= form_with url: friend_requests_path, method: :post do %>
-        <%= hidden_field_tag :post_id, @post.id %>
-        <%= submit_tag "リクエストを送る", class: "btn btn-primary" %>
-      <% end %>
-    <% else %>
-      <p>リクエスト済み</p>
-    <% end %>
-  <% end %>
+<div class="row justify-content-center py-4">
+  <div class="col-md-8">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <div class="small text-muted mb-2"><%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+        <h1><%= @post.title %></h1>
+        <p><%= @post.content %></p>
+        <% if logged_in? %>
+          <% if current_user && current_user == @post.user %>
+            <%= form_with url: post_path, method: :delete do %>
+              <%= submit_tag "削除", class: "btn btn-primary" %>
+            <% end %>
+          <% elsif !FriendRequest.where(sender: current_user, post: @post).exists? %>
+            <%= form_with url: friend_requests_path, method: :post do %>
+              <%= hidden_field_tag :post_id, @post.id %>
+              <%= submit_tag "フレンドリクエストを送る", class: "btn btn-primary" %>
+            <% end %>
+          <% else %>
+            <p>リクエスト済み</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
