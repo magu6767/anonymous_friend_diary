@@ -12,7 +12,7 @@
 .nav-link {
   color: #000 !important;
   font-family: 'Hiragino Maru Gothic Pro', cursive;
-  
+
   &:hover {
     color: #000 !important;
   }
@@ -38,5 +38,19 @@
 }
 
 body {
-  background-color: #E6DED5; // ここで希望の色に変更
+  background-color: #E6DED5;
+}
+
+.user-card {
+  background: linear-gradient(to right, #fff, #f8f4f1);
+  border: none !important;
+}
+
+.post-card {
+  border: 1px solid rgba(181, 166, 152, 0.2) !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(139, 119, 101, 0.1);
+  }
 }

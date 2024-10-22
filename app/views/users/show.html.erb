@@ -1,21 +1,31 @@
 <% provide(:title, @user.name) %>
-<h1>User Details</h1>
+<div class="row justify-content-center py-4">
+    <div class="col-md-8">
+<h1>プロフィール</h1>
 
-<p><strong>Name:</strong> <%= @user.name %></p>
-
-<% if current_user.admin? || current_user?(@user) %>
-  <p><strong>Email:</strong> <%= @user.email %></p>
-  <%= link_to 'Edit', edit_user_path(@user) %>
-<% end %>
+<div class="card mb-4 border-0 user-card">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center">
+            <div>
+                <h2 class="card-title mb-1"><%= @user.name %></p></h2>
+                <p class="card-text text-muted small">
+                    <i class="fas fa-envelope me-1"></i>
+                    <% if current_user.admin? || current_user?(@user) %>
+                      <p><strong>Email:</strong> <%= @user.email %></p>
+                      <%= link_to "プロフィールの編集", edit_user_path(@user) %>
+                    <% end %>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <% if current_user.admin? && !current_user?(@user) %>
     | <%= link_to "Delete", @user, data: { "turbo-method": :delete,
-                                          turbo_confirm: "You sure?" } %>
+                                           turbo_confirm: "You sure?" } %>
 <% end %>
 
-<h1>投稿一覧</h1>
-<div class="row justify-content-center py-4">
-  <div class="col-md-8">
+<h5>自分の投稿</h5>
     <%= render @user.posts %>
   </div>
 </div>
