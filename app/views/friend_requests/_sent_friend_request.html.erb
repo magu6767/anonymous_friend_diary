@@ -1,6 +1,29 @@
-<div class="friend-request-item">
-  <%= link_to sent_friend_request.post.title, post_path(sent_friend_request.post), class: "friend-request-link" %>
-  <%= form_with url: friend_request_path(sent_friend_request), method: :delete do |f| %>
-    <%= f.submit "リクエストを取り消す", class: "btn btn-danger" %>
-  <% end %>
+<div class="friend-request-item card border-0 shadow-sm mb-3" style="background-color: #E6DED5;">
+  <div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="flex-grow-1">
+        <h5 class="card-title mb-2">
+          <%= link_to sent_friend_request.post.title,
+                      post_path(sent_friend_request.post),
+                      class: "friend-request-link text-dark text-decoration-none fw-bold hover-link" %>
+        </h5>
+        <p class="text-muted mb-0">
+          <small>
+            <i class="bi bi-clock me-1"></i>
+            送信日: <%= sent_friend_request.created_at.strftime("%Y年%m月%d日") %>
+          </small>
+        </p>
+      </div>
+      <div class="ms-3">
+        <%= form_with url: friend_request_path(sent_friend_request),
+                      method: :delete,
+                      class: "d-inline" do |f| %>
+          <%= f.button type: "submit",
+                       class: "btn btn-outline-danger btn-sm rounded-pill px-3 hover-scale" do %>
+            <i class="bi bi-x-circle me-1"></i>リクエストを取り消す
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

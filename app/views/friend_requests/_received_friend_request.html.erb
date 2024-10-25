@@ -1,22 +1,73 @@
-<div class="friend-request-item">
-  <%= received_friend_request.sender.name %>さんからのリクエスト
-  <% received_friend_request.sender.posts.sample(3).each do |post| %>
-    <%= link_to post.title, post_path(post) %>
-  <% end %>
-  <p>この投稿から</p>
-  <%= link_to received_friend_request.post.title, post_path(received_friend_request.post) %>
+<div class="friend-request-item card border-0 shadow-sm mb-3" style="background-color: #E6DED5;">
+  <div class="card-body p-4">
+    <!-- ヘッダー部分 -->
+    <div class="d-flex align-items-center mb-3">
+      <div class="flex-grow-1">
+        <h5 class="card-title mb-0">
+          <i class="bi bi-person-circle me-2"></i>
+          <%= received_friend_request.sender.name %>さんからのリクエスト
+        </h5>
+      </div>
+      <% if received_friend_request.accepted? %>
+        <span class="badge bg-success rounded-pill px-3">
+          <i class="bi bi-check-circle me-1"></i>承認済み
+        </span>
+      <% end %>
+    </div>
 
-  <% if received_friend_request.accepted? %>
-    承認済み
-  <% else %>
-    <div class="friend-request-buttons">
-    <%= form_with url: friend_request_path(received_friend_request), method: :patch do |f| %>
-      <%= hidden_field_tag :status, "accepted" %>
-      <%= f.submit "承認", class: "btn btn-primary" %>
+    <!-- 送信者の投稿サンプル（未承認時のみ表示） -->
+    <% unless received_friend_request.accepted? %>
+      <div class="mb-3">
+        <p class="text-muted mb-2">
+          <small><i class="bi bi-bookmarks me-1"></i>最近の投稿</small>
+        </p>
+        <div class="list-group list-group-flush bg-transparent">
+          <% received_friend_request.sender.posts.sample(3).each do |post| %>
+            <%= link_to post_path(post),
+                        class: "list-group-item list-group-item-action border-0 ps-3 py-2 bg-transparent hover-link" do %>
+              <i class="bi bi-dot me-2"></i><%= post.title %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     <% end %>
-    <%= form_with url: friend_request_path(received_friend_request), method: :patch do |f| %>
-      <%= f.submit "拒否", class: "btn btn-danger" %>
-      <%= hidden_field_tag :status, "rejected" %>
+
+    <!-- リクエスト対象の投稿 -->
+    <div class="<%= received_friend_request.accepted? ? "mb-0" : "mb-4" %>">
+      <p class="text-muted mb-2">
+        <small><i class="bi bi-link-45deg me-1"></i>リクエスト元の投稿</small>
+      </p>
+      <div class="ps-3">
+        <%= link_to post_path(received_friend_request.post),
+                    class: "text-dark text-decoration-none fw-bold hover-link" do %>
+          <%= received_friend_request.post.title %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- ボタン群 -->
+    <% unless received_friend_request.accepted? %>
+      <div class="friend-request-buttons d-flex gap-2 justify-content-end">
+        <%= form_with url: friend_request_path(received_friend_request),
+                      method: :patch,
+                      class: "d-inline" do |f| %>
+          <%= hidden_field_tag :status, "accepted" %>
+          <%= f.button type: "submit",
+                       class: "btn btn-primary rounded-pill px-4 hover-scale" do %>
+            <i class="bi bi-check-circle me-1"></i>承認
+          <% end %>
+        <% end %>
+
+        <%= form_with url: friend_request_path(received_friend_request),
+                      method: :patch,
+                      class: "d-inline" do |f| %>
+          <%= hidden_field_tag :status, "rejected" %>
+          <%= f.button type: "submit",
+                       class: "btn btn-outline-danger rounded-pill px-4 hover-scale" do %>
+            <i class="bi bi-x-circle me-1"></i>拒否
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
+  </div>
 </div>

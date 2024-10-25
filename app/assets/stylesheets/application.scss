@@ -54,3 +54,26 @@ body {
     box-shadow: 0 .5rem 1rem rgba(139, 119, 101, 0.1);
   }
 }
+
+.hover-link {
+  transition: color 0.2s ease;
+  &:hover{
+    color: #6c757d !important;
+  }
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+  &:hover{
+    transform: scale(1.02);
+  }
+}
+
+.btn-outline-danger {
+  background-color: transparent;
+  border-color: #dc3545;
+  &:hover{
+    background-color: #dc3545;
+      color: white;
+  }
+}

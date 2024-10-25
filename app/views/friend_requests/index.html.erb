@@ -1,15 +1,49 @@
-<h1>送ったリクエスト</h1>
-<% if @sent_friend_requests.any? %>
-  <% @sent_friend_requests.each do |s_request| %>
-    <%= render "sent_friend_request", sent_friend_request: s_request %>
-  <% end %>
-<% end %>
-
-<h1>受け取ったリクエスト</h1>
-<% if @received_friend_requests.any? %>
-  <% @received_friend_requests.each do |r_request| %>
-    <% if !r_request.rejected? %>
-      <%= render "received_friend_request", received_friend_request: r_request %>
+<div class="container py-5">
+  <!-- 送信したリクエスト -->
+  <div class="card shadow-sm mb-5">
+    <div class="card-header bg-white">
+      <h2 class="h4 mb-0">
+        <i class="bi bi-send me-2"></i>送信したリクエスト
+      </h2>
+    </div>
+    <% if @sent_friend_requests.any? %>
+      <div class="list-group list-group-flush">
+        <% @sent_friend_requests.each do |s_request| %>
+          <div class="list-group-item list-group-item-action">
+            <%= render "sent_friend_request", sent_friend_request: s_request %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card-body text-muted text-center py-5">
+        <i class="bi bi-inbox-fill fs-1 d-block mb-3"></i>
+        送信したリクエストはありません
+      </div>
     <% end %>
-  <% end %>
-<% end %>
+  </div>
+
+  <!-- 受信したリクエスト -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-white">
+      <h2 class="h4 mb-0">
+        <i class="bi bi-envelope me-2"></i>受信したリクエスト
+      </h2>
+    </div>
+    <% if @received_friend_requests.any? %>
+      <div class="list-group list-group-flush">
+        <% @received_friend_requests.each do |r_request| %>
+          <% if !r_request.rejected? %>
+            <div class="list-group-item list-group-item-action">
+              <%= render "received_friend_request", received_friend_request: r_request %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card-body text-muted text-center py-5">
+        <i class="bi bi-inbox-fill fs-1 d-block mb-3"></i>
+        新しいリクエストはありません
+      </div>
+    <% end %>
+  </div>
+</div>
