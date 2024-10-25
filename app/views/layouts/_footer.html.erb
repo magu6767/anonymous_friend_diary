@@ -1,8 +1,29 @@
-<footer>
-  <nav>
-    <ul style="display: flex;">
-      <li><%= link_to "プライバシーポリシー", about_path %></li>
-      <li><%= link_to "お問い合わせ", contact_path %></li>
-    </ul>
-  </nav>
+<footer class="footer mt-auto py-4 bg-white border-top">
+  <div class="container">
+    <div class="row">
+      <!-- メインナビゲーション -->
+      <div class="col-12 mb-3">
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <%= link_to "プライバシーポリシー", about_path, class: "nav-link px-3 text-secondary hover-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "お問い合わせ", contact_path, class: "nav-link px-3 text-secondary hover-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "利用規約", contact_path, class: "nav-link px-3 text-secondary hover-link" %>
+          </li>
+        </ul>
+      </div>
+
+      <!-- コピーライト -->
+      <div class="col-12 text-center">
+        <p class="text-muted mb-0">
+          <small>
+            Copyright © <%= Time.current.year %> YourServiceName All Rights Reserved.
+          </small>
+        </p>
+      </div>
+    </div>
+  </div>
 </footer>

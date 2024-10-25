@@ -81,3 +81,18 @@ body {
 .list-group-item:last-child {
   border-bottom: 0 !important;
 }
+
+.footer {
+  font-size: 0.9rem;
+}
+
+.nav-item:not(:last-child) .nav-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 14px;
+  width: 1px;
+  background-color: #dee2e6;
+}
