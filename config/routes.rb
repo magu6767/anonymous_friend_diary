@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root   "posts#index"
-  get    "/help",    to: "static_pages#help"
+  get    "/privacy_policy",    to: "static_pages#privacy_policy"
   get    "/about",   to: "static_pages#about"
-  get    "/contact", to: "static_pages#contact"
+  get    "/terms", to: "static_pages#terms"
   get    "/login",   to: "sessions#new"
   post   "/login",   to: "sessions#create"
   delete "/logout",  to: "sessions#destroy"
