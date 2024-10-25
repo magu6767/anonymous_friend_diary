@@ -4,19 +4,24 @@
       <div class="card-body">
         <div class="small text-muted mb-2"><%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></div>
         <h1><%= @post.title %></h1>
-        <p><%= @post.content %></p>
+        <p><%= simple_format(@post.content) %></p>
         <% if logged_in? %>
           <% if current_user && current_user == @post.user %>
             <%= form_with url: post_path, method: :delete do %>
               <%= submit_tag "削除", class: "btn btn-primary" %>
             <% end %>
-          <% elsif !FriendRequest.where(sender: current_user, post: @post).exists? %>
-            <%= form_with url: friend_requests_path, method: :post do %>
-              <%= hidden_field_tag :post_id, @post.id %>
-              <%= submit_tag "フレンドリクエストを送る", class: "btn btn-primary" %>
-            <% end %>
-          <% else %>
-            <p>リクエスト済み</p>
+            <% elsif !FriendRequest.where(sender: current_user, post: @post).exists? && !current_user.friends.include?(@post.user) %>
+              <%= form_with url: friend_requests_path, method: :post do %>
+                <%= hidden_field_tag :post_id, @post.id %>
+                <%= button_tag type: "submit",
+                               class: "btn btn-primary rounded-pill px-4 hover-scale" do %>
+                  フレンドリクエストを送る
+                <% end %>
+              <% end %>
+            <% elsif current_user.friends.include?(@post.user) %>
+              <%= link_to "#{@post.user.name}の投稿", user_path(@post.user), class: "btn btn-outline-primary rounded-pill px-4" %>
+            <% else %>
+              <span class="badge bg-secondary rounded-pill px-4 py-2">リクエスト済み</span>
           <% end %>
         <% end %>
       </div>

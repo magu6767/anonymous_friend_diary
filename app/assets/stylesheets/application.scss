@@ -77,3 +77,7 @@ body {
       color: white;
   }
 }
+
+.list-group-item:last-child {
+  border-bottom: 0 !important;
+}

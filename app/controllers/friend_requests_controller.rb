@@ -17,10 +17,10 @@ class FriendRequestsController < ApplicationController
                                     status: "pending")
 
     if new_request.save
-      flash[:success] = "Friend request sent"
+      flash[:success] = "リクエストを送信しました！"
       redirect_to @post
     else
-      flash[:danger] = "Friend request failed"
+      flash[:danger] = "リクエストの送信に失敗しました"
       redirect_to @post
     end
   end
@@ -31,20 +31,20 @@ class FriendRequestsController < ApplicationController
       if request.accepted?
         friendship = Friendship.new(user1: request.sender, user2: request.receiver)
         if friendship.save
-          flash[:success] = "Friend request accepted"
+          flash[:success] = "リクエストを承認しました。"
         end
       elsif request.rejected?
-        flash[:success] = "Friend request rejected"
+        flash[:success] = "リクエストを拒否しました。"
       end
     else
-      flash[:danger] = "Friend request update failed"  
+      flash[:danger] = "リクエストの更新に失敗しました。"
     end
     redirect_to friend_requests_path
   end
 
   def destroy
     FriendRequest.find(params[:id]).destroy
-    flash[:success] = "Friend request deleted"
+    flash[:success] = "リクエストを削除しました。"
     redirect_to friend_requests_url
   end
 end

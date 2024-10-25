@@ -17,7 +17,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      flash[:success] = "Post created!"
+      flash[:success] = "投稿が完了しました!"
       redirect_to @post
     else
       render 'new', status: :unprocessable_entity
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      flash[:success] = "Post updated!"
+      flash[:success] = "更新が完了しました!"
       redirect_to @post
     else
       render 'edit', status: :unprocessable_entity
@@ -39,7 +39,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    flash[:success] = "Post deleted"
+    flash[:success] = "投稿が削除されました"
     redirect_to posts_url, status: :see_other
   end
 
@@ -52,7 +52,7 @@ class PostsController < ApplicationController
   def correct_post
     @post = Post.find(params[:id])
     unless @post.user == current_user
-      flash[:alert] = "You are not authorized to edit or delete this post."
+      flash[:alert] = "この投稿を編集または削除する権限がありません。"
       redirect_to root_url
     end
   end

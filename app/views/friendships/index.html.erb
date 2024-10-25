@@ -1,9 +1,46 @@
-<h1>フレンド一覧</h1>
-<ul class="users">
-  <% @friends.each do |friend| %>
-    <li><%= link_to friend.name, user_path(friend) %></li>
-    <%= form_with url: friendship_path(current_user.search_friendship(friend)), method: :delete do |f| %>
-      <%= f.submit "削除", class: "btn btn-danger" %>
-    <% end %>
-  <% end %>
-</ul>
+<div class="container py-5">
+  <div class="card shadow-sm border-0" style="background-color: #E6DED5;">
+    <div class="card-header bg-white border-0">
+      <h2 class="h4 mb-0">フレンド一覧</h2>
+    </div>
+    
+    <div class="card-body p-4">
+      <% if @friends.any? %>
+        <div class="list-group list-group-flush">
+          <% @friends.each do |friend| %>
+            <div class="list-group-item bg-transparent border-bottom py-3 px-0">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <%= link_to user_path(friend),
+                              class: "text-decoration-none hover-link" do %>
+                    <div>
+                      <h5 class="mb-1 text-dark"><%= friend.name %></h5>
+                    </div>
+                  <% end %>
+                </div>
+                
+                <!-- 削除ボタン -->
+                <div>
+                  <%= form_with url: friendship_path(current_user.search_friendship(friend)),
+                                method: :delete do |f| %>
+                    <%= f.button type: "submit",
+                                 class: "btn btn-outline-danger btn-sm rounded-pill px-3 hover-scale",
+                                 data: { confirm: "#{friend.name}さんをフレンドから削除してもよろしいですか？" } do %>
+                      削除
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <!-- フレンドがいない場合の表示 -->
+        <div class="text-center text-muted py-5">
+          <p class="mb-0">まだフレンドがいません</p>
+          <small>他のユーザーとフレンドになって交流を始めましょう！</small>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

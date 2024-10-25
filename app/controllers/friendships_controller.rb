@@ -8,10 +8,10 @@ class FriendshipsController < ApplicationController
   def create
     @friendship = Friendship.new(friendship_params)
     if @friendship.save
-      flash[:notice] = "Friendship was successfully created."
+      flash[:notice] = "フレンドが作成されました！"
       redirect_to friendships_path
     else
-      flash[:error] = "Friendship was not created."
+      flash[:error] = "フレンドの作成に失敗しました。"
       render :new, status: :unprocessable_entity
     end
   end
@@ -19,9 +19,9 @@ class FriendshipsController < ApplicationController
   def destroy
     @friendship = Friendship.find(params[:id])
     if @friendship.destroy
-      flash[:notice] = "Friendship was successfully deleted."
+      flash[:notice] = "フレンドが正常に削除されました。"
     else
-      flash[:error] = "Friendship was not deleted."
+      flash[:error] = "フレンドの削除に失敗しました。"
     end
     redirect_to friendships_path
   end
