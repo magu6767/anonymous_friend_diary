@@ -42,8 +42,4 @@ yarn-debug.log*
 .yarn-integrity
 
 # 環境変数ファイルを無視
-.env
-.env.*
 *.env
-
-.setting.env
