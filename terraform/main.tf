@@ -30,7 +30,7 @@ module "ec2" {
   vpc_id      = module.vpc.vpc_id
   alb_sg_id   = module.alb.alb_sg_id
 
-  ami_id        = "ami-xxxxxxxx"
+  ami_id        = "ami-03f584e50b2d32776"
   instance_type = "t3a.medium"
   subnet_id     = module.vpc.public_subnet_id
   key_name      = "dpp-key"
@@ -47,8 +47,8 @@ module "ec2" {
 module "acm" {
   source = "./modules/acm"
 
-  domain_name = "ACM証明書を発行するドメイン名"
-  route53_zone_id = "Route53のホストゾーンID"
+  domain_name = "anonymous-friend-diary.com"
+  route53_zone_id = "Z09253851VU9A9DWELC1J"
 }
 
 module "alb" {
