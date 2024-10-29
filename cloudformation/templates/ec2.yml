@@ -30,7 +30,7 @@ Parameters:
 
   KeyName:
     Type: "AWS::EC2::KeyPair::KeyName"
-    Default: 'key-09a07b74709fd7da8'
+    Default: 'anonymous-app-key'
     Description: "Enter the name of an existing EC2 KeyPair"
 
 Resources:

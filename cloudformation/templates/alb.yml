@@ -55,7 +55,7 @@ Resources:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
       Name: !Sub 'anf-${EnvironmentName}-alb'
-      Subnets: !Ref PublicSubnetId
+      Subnets: !Split [',', !Ref PublicSubnetId]
       SecurityGroups:
         - !Ref ElbSecurityGroupId
       Scheme: 'internet-facing'

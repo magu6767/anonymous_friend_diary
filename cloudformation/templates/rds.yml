@@ -49,7 +49,7 @@ Resources:
     Type: 'AWS::RDS::DBSubnetGroup'
     Properties:
       DBSubnetGroupDescription: 'Subnet group for ANF Aurora Cluster'
-      SubnetIds: !Ref PrivateSubnetId
+      SubnetIds: !Split [',', !Ref PrivateSubnetId]
       Tags:
         - Key: 'Name'
           Value: !Sub 'anf-${EnvironmentName}-db-subnet-group'
