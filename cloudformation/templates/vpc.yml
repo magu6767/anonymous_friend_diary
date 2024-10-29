@@ -1,55 +1,28 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'VPC Template'
 
-
-Conditions:
-  IsProd: !Equals [!Ref EnvironmentName, 'prod']
-  IsDev: !Equals [!Ref EnvironmentName, 'dev']
-
 Parameters:
   EnvironmentName:
     Type: String
     Description: 'Deployment environment (dev or prod)'
 
-  VpcCidr:
-    Type: String
-    Default: !If 
-      - IsProd
-      - '172.30.0.0/18'
-      - !If
-        - IsDev
-        - '172.31.0.0/18'
-        - 'ERROR: Invalid EnvironmentName'
-    Description: 'CIDR block for the VPC'
-
-  PublicSubnetCidr:
-    Type: String
-    Default: !If 
-      - IsProd
-      - '172.30.0.0/24'
-      - !If
-        - IsDev
-        - '172.31.0.0/24'
-        - 'ERROR: Invalid EnvironmentName'
-    Description: 'CIDR block for the public subnet'
-
-  PrivateSubnetCidr:
-    Type: String
-    Default: !If 
-      - IsProd
-      - '172.30.1.0/24'
-      - !If
-        - IsDev
-        - '172.31.1.0/24'
-        - 'ERROR: Invalid EnvironmentName'
-    Description: 'CIDR block for the private subnet'
+Mappings:
+  EnvironmentToCidr:
+    prod:
+      VpcCidr: '172.30.0.0/18'
+      PublicSubnetCidr: '172.30.0.0/24'
+      PrivateSubnetCidr: '172.30.1.0/24'
+    dev:
+      VpcCidr: '172.31.0.0/18'
+      PublicSubnetCidr: '172.31.0.0/24'
+      PrivateSubnetCidr: '172.31.1.0/24'
 
 Resources:
   # VPC
   AnfVpc:
     Type: 'AWS::EC2::VPC'
     Properties:
-      CidrBlock: !Ref VpcCidr
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, VpcCidr]
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
@@ -75,7 +48,7 @@ Resources:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref AnfVpc
-      CidrBlock: PublicSubnetCidr
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PublicSubnetCidr]
       AvailabilityZone: 'ap-northeast-1a'
       MapPublicIpOnLaunch: true
       Tags:
@@ -87,7 +60,7 @@ Resources:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref AnfVpc
-      CidrBlock: PrivateSubnetCidr
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PrivateSubnetCidr]
       AvailabilityZone: 'ap-northeast-1a'
       MapPublicIpOnLaunch: false
       Tags:

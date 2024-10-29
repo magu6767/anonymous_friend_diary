@@ -27,5 +27,5 @@ Resources:
       Name: !Sub '${DomainName}'
       Type: 'A'
       AliasTarget:
-        DNSName: !Ref AlbDNSName
+        DNSName: !Ref LoadBalancerDNSName
         HostedZoneId: !Ref AlbCanonicalHostedZoneID
