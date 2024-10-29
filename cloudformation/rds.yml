@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'RDS Aurora Template'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: 'Deployment environment (dev or prod)'
+  
+  VpcId:
+    Type: String
+    Description: 'VPC ID'
+
+  PrivateSubnetId:
+    Type: CommaDelimitedList
+    Description: 'Private Subnet ID'
+
+  DbSecurityGroupId:
+    Type: String
+    Description: 'DB Security Group ID'
+
+  DBUsername:
+    Type: String
+    Description: 'DB Username'
+    NoEcho: true
+
+  DBPassword:
+    Type: String
+    Description: 'DB Password'
+    NoEcho: true
+
+Resources:
+  AnfAuroraCluster:
+    Type: 'AWS::RDS::DBCluster'
+    Properties:
+      Engine: 'aurora-mysql'
+      EngineVersion: '8.0.mysql_aurora.3.03.0'
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      DBSubnetGroupName: !Ref AnfDBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref DbSecurityGroupId
+      StorageEncrypted: true
+      DeletionProtection: true
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-aurora-cluster'
+
+  AnfDBSubnetGroup:
+    Type: 'AWS::RDS::DBSubnetGroup'
+    Properties:
+      DBSubnetGroupDescription: 'Subnet group for ANF Aurora Cluster'
+      SubnetIds: !Ref PrivateSubnetId
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-db-subnet-group'
+  
+  AnfAuroraInstance:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBClusterIdentifier: !Ref AnfAuroraCluster
+      Engine: 'aurora-mysql'
+      DBInstanceClass: 'db.t4g.medium'
+      PubliclyAccessible: false
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-aurora-instance'
+
+Outputs:
+  AuroraClusterEndpoint:
+    Description: 'Aurora Cluster Endpoint'
+    Value: !GetAtt AnfAuroraCluster.Endpoint.Address
+

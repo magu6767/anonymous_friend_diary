@@ -1,0 +1,164 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'VPC Template'
+
+
+Conditions:
+  IsProd: !Equals [!Ref EnvironmentName, 'prod']
+  IsDev: !Equals [!Ref EnvironmentName, 'dev']
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: 'Deployment environment (dev or prod)'
+
+  VpcCidr:
+    Type: String
+    Default: !If 
+      - IsProd
+      - '172.30.0.0/18'
+      - !If
+        - IsDev
+        - '172.31.0.0/18'
+        - 'ERROR: Invalid EnvironmentName'
+    Description: 'CIDR block for the VPC'
+
+  PublicSubnetCidr:
+    Type: String
+    Default: !If 
+      - IsProd
+      - '172.30.0.0/24'
+      - !If
+        - IsDev
+        - '172.31.0.0/24'
+        - 'ERROR: Invalid EnvironmentName'
+    Description: 'CIDR block for the public subnet'
+
+  PrivateSubnetCidr:
+    Type: String
+    Default: !If 
+      - IsProd
+      - '172.30.1.0/24'
+      - !If
+        - IsDev
+        - '172.31.1.0/24'
+        - 'ERROR: Invalid EnvironmentName'
+    Description: 'CIDR block for the private subnet'
+
+Resources:
+  # VPC
+  AnfVpc:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: !Ref VpcCidr
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-vpc'
+
+  # Internet Gateway
+  AnfInternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-igw'
+
+  AnfVpcGatewayAttachment:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref AnfVpc
+      InternetGatewayId: !Ref AnfInternetGateway
+
+  # Public Subnets
+  PublicSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref AnfVpc
+      CidrBlock: PublicSubnetCidr
+      AvailabilityZone: 'ap-northeast-1a'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-public-subnet'
+
+  # Private Subnets
+  PrivateSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref AnfVpc
+      CidrBlock: PrivateSubnetCidr
+      AvailabilityZone: 'ap-northeast-1a'
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-private-subnet'
+
+  # Route Tables
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref AnfVpc
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-public-rtb'
+
+  PrivateRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref AnfVpc
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-private-rtb'
+
+  # Routes
+  PublicRoute:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref AnfInternetGateway
+
+  # Route Table Associations
+  PublicSubnetRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivateSubnetRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PrivateSubnet
+      RouteTableId: !Ref PrivateRouteTable
+
+Outputs:
+  VpcId:
+    Description: 'VPC ID'
+    Value: !Ref AnfVpc
+    Export:
+      Name: !Sub '${AWS::StackName}-VpcId'
+
+  PublicSubnetId:
+    Description: 'Public Subnet ID'
+    Value: !Ref PublicSubnet
+    Export:
+      Name: !Sub '${AWS::StackName}-PublicSubnetId'
+
+  PrivateSubnetId:
+    Description: 'Private Subnet ID'
+    Value: !Ref PrivateSubnet
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateSubnetId'
+
+  PublicRouteTableId:
+    Description: 'Public Route Table ID'
+    Value: !Ref PublicRouteTable
+    Export:
+      Name: !Sub '${AWS::StackName}-PublicRouteTableId'
+
+  PrivateRouteTableId:
+    Description: 'Private Route Table ID'
+    Value: !Ref PrivateRouteTable
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateRouteTableId'

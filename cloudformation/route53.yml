@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'RDS Aurora Template'
+
+Parameters:
+
+  DomainName:
+    Type: String
+    Description: 'ドメイン名（例:example.com）'
+
+  HostedZoneId:
+    Type: String
+    Description: 'Route53のホストゾーンID'
+
+  LoadBalancerDNSName:
+    Type: String
+    Description: 'ALBの一意のDNS名'
+
+  AlbCanonicalHostedZoneID:
+    Type: String
+    Description: 'ALBの識別子'
+
+Resources:
+  ALBRecordSet:
+    Type: 'AWS::Route53::RecordSet'
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub '${DomainName}'
+      Type: 'A'
+      AliasTarget:
+        DNSName: !Ref AlbDNSName
+        HostedZoneId: !Ref AlbCanonicalHostedZoneID

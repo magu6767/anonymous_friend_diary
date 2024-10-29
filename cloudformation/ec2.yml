@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'EC2 Instance Template'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: 'Deployment environment (dev or prod)'
+
+  VpcId:
+    Type: String
+    Description: 'VPC ID'
+
+  PublicSubnetId:
+    Type: String
+    Description: 'Public Subnet ID'
+
+  WebSecurityGroupId:
+    Type: String
+    Description: 'Web Security Group ID'
+
+  EC2InstanceType:
+    Type: String
+    Default: 't3a.medium'
+    Description: 'EC2 instance type'
+
+  EC2AMIId:
+    Type: AWS::EC2::Image::Id
+    Default: 'ami-0200d7f79e14ef420'
+    Description: 'AMI ID for the EC2 instance'
+
+  KeyName:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Default: 'key-09a07b74709fd7da8'
+    Description: "Enter the name of an existing EC2 KeyPair"
+
+Resources:
+  AnfEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref EC2InstanceType
+      SubnetId: !Ref PublicSubnetId
+      SecurityGroupIds:
+        - !Ref WebSecurityGroupId
+      ImageId: !Ref EC2AMIId
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-ec2'
+
+Outputs:
+  EC2InstanceId:
+    Description: 'EC2 Instance ID'
+    Value: !Ref AnfEC2Instance

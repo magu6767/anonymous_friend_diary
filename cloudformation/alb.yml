@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Application Load Balancer Template'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: 'Deployment environment (dev or prod)'
+  
+  VpcId:
+    Type: String
+    Description: 'VPC ID'
+
+  PublicSubnetId:
+    Type: CommaDelimitedList
+    Description: 'List of public subnet ID'
+
+  ElbSecurityGroupId:
+    Type: String
+    Description: 'ELB Security Group ID'
+
+  WebSecurityGroupId:
+    Type: String
+    Description: 'Web Security Group ID'
+
+  EC2InstanceId:
+    Type: String
+    Description: 'EC2 Instance ID'
+
+  SSLCertificateArn:
+    Type: String
+    Description: 'ARN of the SSL certificate for HTTPS listener'
+
+Resources:
+  ALBTargetGroup:
+    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Properties:
+      Name: !Sub 'anf-${EnvironmentName}-tg'
+      Protocol: 'HTTP'
+      Port: 80
+      VpcId: !Ref VpcId
+      TargetType: 'instance'
+      HealthCheckProtocol: 'HTTP'
+      HealthCheckPort: '80'
+      HealthCheckPath: '/'
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: '200-399'
+      Targets:
+        - Id: !Ref EC2InstanceId
+
+  ApplicationLoadBalancer:
+    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Properties:
+      Name: !Sub 'anf-${EnvironmentName}-alb'
+      Subnets: !Ref PublicSubnetId
+      SecurityGroups:
+        - !Ref ElbSecurityGroupId
+      Scheme: 'internet-facing'
+      Type: 'application'
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-alb'
+
+  HTTPSListener:
+    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Properties:
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Protocol: 'HTTPS'
+      Port: 443
+      Certificates:
+        - CertificateArn: !Ref SSLCertificateArn
+      DefaultActions:
+        - Type: 'forward'
+          TargetGroupArn: !Ref ALBTargetGroup
+
+Outputs:
+  LoadBalancerDNSName:
+    Description: 'Load Balancer DNS Name'
+    Value: !GetAtt ApplicationLoadBalancer.DNSName
+
+  AlbCanonicalHostedZoneID:
+    Description: 'ALB identifier'
+    Value: !GetAtt ApplicationLoadBalancer.CanonicalHostedZoneID
+
+  TargetGroupArn:
+    Description: 'ALB Target Group ARN'
+    Value: !Ref ALBTargetGroup

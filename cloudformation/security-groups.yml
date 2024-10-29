@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Security Groups Template'
+
+Parameters:
+  VpcId:
+    Type: String
+    Description: 'VPC ID'
+
+  EnvironmentName:
+    Type: String
+    Description: 'Deployment environment (dev or prod)'
+
+  AllowedSSHLocation:
+    Type: String
+    Description: 'CIDR block allowed to SSH to EC2 instances'
+    Default: '14.128.18.1/32' #base1のIPを指定
+
+Resources:
+  ElbSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Security group for ELB'
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '0.0.0.0/0'
+        - IpProtocol: 'tcp'
+          FromPort: 443
+          ToPort: 443
+          CidrIp: '0.0.0.0/0'
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-elb-sg'
+
+  WebSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Security group for ANF server'
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref ElbSecurityGroup
+        - IpProtocol: 'tcp'
+          FromPort: 443
+          ToPort: 443
+          SourceSecurityGroupId: !Ref ElbSecurityGroup
+        - IpProtocol: 'tcp'
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowedSSHLocation
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-web-sg'
+
+  DbSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Security group for Aurora DB'
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref WebSecurityGroup
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-db-sg'
+
+Outputs:
+  ElbSecurityGroupId:
+    Description: 'ELB Security Group ID'
+    Value: !Ref ElbSecurityGroup
+
+  WebSecurityGroupId:
+    Description: 'Web Security Group ID'
+    Value: !Ref WebSecurityGroup
+
+  DbSecurityGroupId:
+    Description: 'DB Security Group ID'
+    Value: !Ref DbSecurityGroup

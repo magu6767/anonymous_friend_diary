@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ACM Certificate Template'
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: 'ドメイン名（例:example.com）'
+
+  HostedZoneId:
+    Type: String
+    Description: 'Route53のホストゾーンID'
+
+Resources:
+  Certificate:
+    Type: 'AWS::CertificateManager::Certificate'
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: 'DNS'
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZoneId
+
+Outputs:
+  SSLCertificateArn:
+    Description: 'ACM Certificate ARN'
+    Value: !Ref Certificate
