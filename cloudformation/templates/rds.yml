@@ -10,9 +10,9 @@ Parameters:
     Type: String
     Description: 'VPC ID'
 
-  PrivateSubnetId:
+  PrivateSubnetIds:
     Type: CommaDelimitedList
-    Description: 'Private Subnet ID'
+    Description: 'Private Subnet IDs'
 
   DbSecurityGroupId:
     Type: String
@@ -33,7 +33,7 @@ Resources:
     Type: 'AWS::RDS::DBCluster'
     Properties:
       Engine: 'aurora-mysql'
-      EngineVersion: '8.0.mysql_aurora.3.03.0'
+      EngineVersion: '8.0.mysql_aurora.3.04.1'
       MasterUsername: !Ref DBUsername
       MasterUserPassword: !Ref DBPassword
       DBSubnetGroupName: !Ref AnfDBSubnetGroup
@@ -49,7 +49,7 @@ Resources:
     Type: 'AWS::RDS::DBSubnetGroup'
     Properties:
       DBSubnetGroupDescription: 'Subnet group for ANF Aurora Cluster'
-      SubnetIds: !Ref PrivateSubnetId
+      SubnetIds: !Ref PrivateSubnetIds
       Tags:
         - Key: 'Name'
           Value: !Sub 'anf-${EnvironmentName}-db-subnet-group'
@@ -57,6 +57,7 @@ Resources:
   AnfAuroraInstance:
     Type: 'AWS::RDS::DBInstance'
     Properties:
+      Engine: 'aurora-mysql'
       DBClusterIdentifier: !Ref AnfAuroraCluster
       DBInstanceClass: 'db.t4g.medium'
       PubliclyAccessible: false

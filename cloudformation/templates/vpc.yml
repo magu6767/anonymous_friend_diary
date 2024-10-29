@@ -10,12 +10,16 @@ Mappings:
   EnvironmentToCidr:
     prod:
       VpcCidr: '172.30.0.0/18'
-      PublicSubnetCidr: '172.30.0.0/24'
-      PrivateSubnetCidr: '172.30.1.0/24'
+      PublicSubnet1aCidr: '172.30.0.0/24'
+      PublicSubnet1cCidr: '172.30.2.0/24'
+      PrivateSubnet1aCidr: '172.30.1.0/24'
+      PrivateSubnet1cCidr: '172.30.3.0/24'
     dev:
       VpcCidr: '172.31.0.0/18'
-      PublicSubnetCidr: '172.31.0.0/24'
-      PrivateSubnetCidr: '172.31.1.0/24'
+      PublicSubnet1aCidr: '172.31.0.0/24'
+      PublicSubnet1cCidr: '172.31.2.0/24'
+      PrivateSubnet1aCidr: '172.31.1.0/24'
+      PrivateSubnet1cCidr: '172.31.3.0/24'
 
 Resources:
   # VPC
@@ -44,28 +48,50 @@ Resources:
       InternetGatewayId: !Ref AnfInternetGateway
 
   # Public Subnets
-  PublicSubnet:
+  PublicSubnet1a:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref AnfVpc
-      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PublicSubnetCidr]
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PublicSubnet1aCidr]
       AvailabilityZone: 'ap-northeast-1a'
       MapPublicIpOnLaunch: true
       Tags:
         - Key: 'Name'
-          Value: !Sub 'anf-${EnvironmentName}-public-subnet'
+          Value: !Sub 'anf-${EnvironmentName}-public-subnet-1a'
 
-  # Private Subnets
-  PrivateSubnet:
+  PublicSubnet1c:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref AnfVpc
-      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PrivateSubnetCidr]
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PublicSubnet1cCidr]
+      AvailabilityZone: 'ap-northeast-1c'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-public-subnet-1c'
+
+  # Private Subnets
+  PrivateSubnet1a:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref AnfVpc
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PrivateSubnet1aCidr]
       AvailabilityZone: 'ap-northeast-1a'
       MapPublicIpOnLaunch: false
       Tags:
         - Key: 'Name'
-          Value: !Sub 'anf-${EnvironmentName}-private-subnet'
+          Value: !Sub 'anf-${EnvironmentName}-private-subnet-1a'
+
+  PrivateSubnet1c:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref AnfVpc
+      CidrBlock: !FindInMap [EnvironmentToCidr, !Ref EnvironmentName, PrivateSubnet1cCidr]
+      AvailabilityZone: 'ap-northeast-1c'
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: 'Name'
+          Value: !Sub 'anf-${EnvironmentName}-private-subnet-1c'
 
   # Route Tables
   PublicRouteTable:
@@ -93,16 +119,28 @@ Resources:
       GatewayId: !Ref AnfInternetGateway
 
   # Route Table Associations
-  PublicSubnetRouteTableAssociation:
+  PublicSubnet1aRouteTableAssociation:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
-      SubnetId: !Ref PublicSubnet
+      SubnetId: !Ref PublicSubnet1a
       RouteTableId: !Ref PublicRouteTable
 
-  PrivateSubnetRouteTableAssociation:
+  PublicSubnet1cRouteTableAssociation:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
-      SubnetId: !Ref PrivateSubnet
+      SubnetId: !Ref PublicSubnet1c
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivateSubnet1aRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PrivateSubnet1a
+      RouteTableId: !Ref PrivateRouteTable
+
+  PrivateSubnet1cRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PrivateSubnet1c
       RouteTableId: !Ref PrivateRouteTable
 
 Outputs:
@@ -112,17 +150,41 @@ Outputs:
     Export:
       Name: !Sub '${AWS::StackName}-VpcId'
 
-  PublicSubnetId:
-    Description: 'Public Subnet ID'
-    Value: !Ref PublicSubnet
+  PublicSubnet1aId:
+    Description: 'Public Subnet 1a ID'
+    Value: !Ref PublicSubnet1a
     Export:
-      Name: !Sub '${AWS::StackName}-PublicSubnetId'
+      Name: !Sub '${AWS::StackName}-PublicSubnet1aId'
 
-  PrivateSubnetId:
-    Description: 'Private Subnet ID'
-    Value: !Ref PrivateSubnet
+  PublicSubnet1cId:
+    Description: 'Public Subnet 1c ID'
+    Value: !Ref PublicSubnet1c
     Export:
-      Name: !Sub '${AWS::StackName}-PrivateSubnetId'
+      Name: !Sub '${AWS::StackName}-PublicSubnet1cId'
+
+  PrivateSubnet1aId:
+    Description: 'Private Subnet 1a ID'
+    Value: !Ref PrivateSubnet1a
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateSubnet1aId'
+
+  PrivateSubnet1cId:
+    Description: 'Private Subnet 1c ID'
+    Value: !Ref PrivateSubnet1c
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateSubnet1cId'
+
+  PublicSubnetIds:
+    Description: 'Comma-delimited list of Public Subnet IDs'
+    Value: !Join [',', [!Ref PublicSubnet1a, !Ref PublicSubnet1c]]
+    Export:
+      Name: !Sub '${AWS::StackName}-PublicSubnetIds'
+
+  PrivateSubnetIds:
+    Description: 'Comma-delimited list of Private Subnet IDs'
+    Value: !Join [',', [!Ref PrivateSubnet1a, !Ref PrivateSubnet1c]]
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateSubnetIds'
 
   PublicRouteTableId:
     Description: 'Public Route Table ID'

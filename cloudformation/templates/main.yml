@@ -51,7 +51,7 @@ Resources:
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         VpcId: !GetAtt VPCStack.Outputs.VpcId
-        PublicSubnetId: !GetAtt VPCStack.Outputs.PublicSubnetId
+        PublicSubnetId: !GetAtt VPCStack.Outputs.PublicSubnet1aId
         WebSecurityGroupId: !GetAtt SecurityGroupsStack.Outputs.WebSecurityGroupId
 
   ACMStack:
@@ -69,7 +69,7 @@ Resources:
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         VpcId: !GetAtt VPCStack.Outputs.VpcId
-        PublicSubnetId: !GetAtt VPCStack.Outputs.PublicSubnetId
+        PublicSubnetIds: !GetAtt VPCStack.Outputs.PublicSubnetIds
         ElbSecurityGroupId: !GetAtt SecurityGroupsStack.Outputs.ElbSecurityGroupId
         WebSecurityGroupId: !GetAtt SecurityGroupsStack.Outputs.WebSecurityGroupId
         EC2InstanceId: !GetAtt EC2Stack.Outputs.EC2InstanceId
@@ -92,7 +92,7 @@ Resources:
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         VpcId: !GetAtt VPCStack.Outputs.VpcId
-        PrivateSubnetId: !GetAtt VPCStack.Outputs.PrivateSubnetId
+        PrivateSubnetIds: !GetAtt VPCStack.Outputs.PrivateSubnetIds
         DbSecurityGroupId: !GetAtt SecurityGroupsStack.Outputs.DbSecurityGroupId
         DBUsername: !Ref DBUsername
         DBPassword: !Ref DBPassword

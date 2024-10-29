@@ -10,7 +10,7 @@ Parameters:
     Type: String
     Description: 'VPC ID'
 
-  PublicSubnetId:
+  PublicSubnetIds:
     Type: CommaDelimitedList
     Description: 'List of public subnet ID'
 
@@ -55,7 +55,7 @@ Resources:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
       Name: !Sub 'anf-${EnvironmentName}-alb'
-      Subnets: !Ref PublicSubnetId
+      Subnets: !Ref PublicSubnetIds
       SecurityGroups:
         - !Ref ElbSecurityGroupId
       Scheme: 'internet-facing'
