@@ -58,12 +58,12 @@ Resources:
     Type: 'AWS::RDS::DBInstance'
     Properties:
       DBClusterIdentifier: !Ref AnfAuroraCluster
-      Engine: 'aurora-mysql'
       DBInstanceClass: 'db.t4g.medium'
       PubliclyAccessible: false
       Tags:
         - Key: 'Name'
           Value: !Sub 'anf-${EnvironmentName}-aurora-instance'
+
 
 Outputs:
   AuroraClusterEndpoint:
