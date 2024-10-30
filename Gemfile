@@ -31,6 +31,11 @@ group :development do
   gem "solargraph",          "0.50.0"
   gem "irb",                 "1.10.0"
   gem "repl_type_completor", "0.1.2"
+  gem "capistrano", require: false
+  gem "capistrano-bundler", require: false
+  gem "capistrano-rails", require: false
+  gem "capistrano-rbenv", require: false
+  gem "capistrano3-unicorn", require: false # 必要に応じて
 end
 
 group :test do
