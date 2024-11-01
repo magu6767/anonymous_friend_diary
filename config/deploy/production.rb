@@ -59,10 +59,9 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-server '18.183.172.152', user: 'ec2-user', roles: %w{app db web}
+server 'anf-ec2', roles: %w{app db web}
 
 set :ssh_options, {
-  keys: %w(~/.ssh/anonymous-app-key.pem),
   forward_agent: true,
   auth_methods: %w(publickey)
 }
