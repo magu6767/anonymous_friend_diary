@@ -59,9 +59,14 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-server 'anf-ec2', roles: %w{app db web}
+server 'anf-ec2', user: 'ec2-user', roles: %w{app db web}
 
 set :ssh_options, {
+  keys: %w(~/.ssh/anonymous-app-key.pem ~/.ssh/id_ecdsa),
   forward_agent: true,
-  auth_methods: %w(publickey)
+  auth_methods: %w(publickey),
+  verify_host_key: :never
 }
+
+# GitHub用の認証設定を追加
+set :git_ssh_command, "ssh -o ForwardAgent=yes"

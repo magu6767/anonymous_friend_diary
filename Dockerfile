@@ -15,7 +15,6 @@ WORKDIR /app
 COPY Gemfile* ./
 
 # Bundlerのインストールと実行
-RUN gem install bundler:2.4.22
 RUN bundle install
 
 # アプリケーションのコピー

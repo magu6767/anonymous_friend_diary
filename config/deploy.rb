@@ -3,8 +3,7 @@ lock "~> 3.19.1"
 
 set :application, "anonymous_friend_diary"
 set :repo_url, "git@github.com:magu6767/anonymous_friend_diary.git"
-
-set :deploy_to, '/var/www/#{fetch(:application)}'
+set :deploy_to, '/var/www/html/anonymous_friend_diary'
 
 set :pty, true
 set :linked_files, %w{config/database.yml config/master.key}

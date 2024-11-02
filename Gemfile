@@ -22,6 +22,7 @@ gem "sqlite3",         "1.6.1"
 gem "sassc-rails", ">= 2.1.0"
 gem 'mysql2'
 
+
 group :development, :test do
   gem "debug",   "1.7.1", platforms: %i[ mri mingw x64_mingw ]
 end
@@ -31,11 +32,11 @@ group :development do
   gem "solargraph",          "0.50.0"
   gem "irb",                 "1.10.0"
   gem "repl_type_completor", "0.1.2"
-  gem "capistrano", require: false
-  gem "capistrano-bundler", require: false
-  gem "capistrano-rails", require: false
-  gem "capistrano-rbenv", require: false
-  gem "capistrano3-unicorn", require: false # 必要に応じて
+  gem "capistrano"
+  gem "capistrano-bundler"
+  gem "capistrano-rails"
+  gem "capistrano-rbenv"
+  gem "capistrano3-unicorn"
 end
 
 group :test do
