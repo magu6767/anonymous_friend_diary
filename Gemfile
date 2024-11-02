@@ -36,6 +36,7 @@ group :development do
   gem "capistrano-rails", require: false
   gem "capistrano-rbenv", require: false
   gem "capistrano3-unicorn", require: false # 必要に応じて
+  gem "capistrano3-puma", require: false
 end
 
 group :test do
@@ -48,3 +49,4 @@ group :test do
   gem "guard",                    "2.18.0"
   gem "guard-minitest",           "2.4.6"
 end
+
