@@ -28,3 +28,19 @@ set :puma_worker_timeout, nil
 # その他の設定
 set :use_sudo, false
 set :deploy_via, :remote_cache
+
+set :branch, 'main'
+
+# developmentとtestを除外
+set :bundle_without, %w{development test}.join(' ')
+
+namespace :deploy do
+  desc 'Upload database.yml and master.key'
+  task :upload do
+    on roles(:app) do |host|
+      execute "mkdir -p #{shared_path}/config"
+      upload! 'config/database.yml', "#{shared_path}/config/database.yml"
+      upload! 'config/master.key', "#{shared_path}/config/master.key"
+    end
+  end
+end
