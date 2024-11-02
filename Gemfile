@@ -16,7 +16,7 @@ gem "importmap-rails", "1.1.5"
 gem "turbo-rails",     "1.4.0"
 gem "stimulus-rails",  "1.2.1"
 gem "jbuilder",        "2.11.5"
-gem "puma",            "5.6.8"
+gem "puma",            "~> 6.0"
 gem "bootsnap",        "1.16.0", require: false
 gem "sqlite3",         "1.6.1"
 gem "sassc-rails", ">= 2.1.0"
@@ -36,7 +36,7 @@ group :development do
   gem "capistrano-rails", require: false
   gem "capistrano-rbenv", require: false
   gem "capistrano3-unicorn", require: false # 必要に応じて
-  gem "capistrano3-puma", require: false
+  gem "capistrano3-puma", "6.0.0.beta.1", require: false
 end
 
 group :test do
