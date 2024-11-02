@@ -23,3 +23,6 @@ sudo dnf install https://dev.mysql.com/get/mysql84-community-release-el9-1.noarc
 sudo dnf install mysql-community-server -y
 sudo systemctl enable mysqld
 sudo systemctl start mysqld
+
+# MySQL開発用パッケージのインストール
+sudo dnf install mysql-devel -y
