@@ -8,6 +8,7 @@ set :deploy_to, '/var/www/html/anonymous_friend_diary'
 set :pty, true
 set :linked_files, %w{config/database.yml config/master.key}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system storage}
+append :linked_dirs, "log", "tmp/pids", "tmp/sockets"
 
 set :rbenv_type, :user
 set :rbenv_ruby, '3.0.5'
