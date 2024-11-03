@@ -11,4 +11,3 @@ plugin :tmp_restart
 stdout_redirect 'log/puma.stdout.log', 'log/puma.stderr.log', true
 worker_timeout 60
 prune_bundler
-daemonize true
