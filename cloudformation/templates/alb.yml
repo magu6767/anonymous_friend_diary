@@ -34,13 +34,12 @@ Resources:
   ALBTargetGroup:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     Properties:
-      Name: !Sub 'anf-${EnvironmentName}-tg'
       Protocol: 'HTTP'
-      Port: 80
+      Port: 3000
       VpcId: !Ref VpcId
       TargetType: 'instance'
       HealthCheckProtocol: 'HTTP'
-      HealthCheckPort: '80'
+      HealthCheckPort: '3000'
       HealthCheckPath: '/'
       HealthCheckIntervalSeconds: 30
       HealthCheckTimeoutSeconds: 5

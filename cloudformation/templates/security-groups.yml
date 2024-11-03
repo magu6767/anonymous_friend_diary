@@ -49,6 +49,10 @@ Resources:
           ToPort: 443
           SourceSecurityGroupId: !Ref ElbSecurityGroup
         - IpProtocol: 'tcp'
+          FromPort: 3000
+          ToPort: 3000
+          SourceSecurityGroupId: !Ref ElbSecurityGroup
+        - IpProtocol: 'tcp'
           FromPort: 22
           ToPort: 22
           CidrIp: !Ref AllowedSSHLocation
