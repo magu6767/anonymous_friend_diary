@@ -8,3 +8,6 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 workers ENV.fetch("WEB_CONCURRENCY") { 4 }
 preload_app!
 plugin :tmp_restart
+stdout_redirect 'log/puma.stdout.log', 'log/puma.stderr.log', true
+worker_timeout 60
+prune_bundler
