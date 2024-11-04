@@ -25,4 +25,14 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   host = 'https://anonymous-friend-diary.com'
   config.action_mailer.default_url_options = { host: host }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.smtp[:endpoint],
+    user_name: Rails.application.credentials.smtp[:username],
+    password: Rails.application.credentials.smtp[:password],
+    enable_starttls: true,
+    port: 587,
+    authentication: :login
+  }
 end
