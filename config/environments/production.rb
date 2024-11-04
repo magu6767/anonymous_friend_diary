@@ -23,6 +23,6 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
-
-  config.routes.default_url_options[:host] = 'https://anonymous-friend-diary.com'
+  host = 'https://anonymous-friend-diary.com'
+  config.action_mailer.default_url_options = { host: host }
 end
