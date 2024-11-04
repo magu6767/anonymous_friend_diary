@@ -14,8 +14,6 @@ Rails.application.configure do
   config.i18n.fallbacks = true
   config.active_support.report_deprecations = false
   config.log_formatter = ::Logger::Formatter.new
-  config.hosts << "anonymous-friend-diary.com"
-  config.hosts << "172.30.0.63" # ELBのIPアドレス
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
