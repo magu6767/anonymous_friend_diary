@@ -7,31 +7,30 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-new-post" href="<%= about_path %>">使い方</a>
-                        </li>
                         <% if logged_in? %>
                             <% if current_user.admin? %>
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-new-post" href="<%= users_path %>">ユーザー一覧</a>
+                                    <a class="nav-link" href="<%= users_path %>">ユーザー一覧</a>
                                 </li>
                             <% end %>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-new-post" href="<%= new_post_path %>">新規投稿</a>
+                                <a class="nav-link" href="<%= new_post_path %>">新規投稿</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-new-post" href="<%= friend_requests_path %>">リクエスト</a>
+                                <a class="nav-link" href="<%= about_path %>">使い方</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-new-post" href="<%= friendships_path %>">フレンド</a>
+                                <a class="nav-link" href="<%= friend_requests_path %>">リクエスト</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%= friendships_path %>">フレンド</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle btn btn-new-post" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     アカウント
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="<%= user_path(current_user) %>">プロフィール</a></li>
-                                    <li><a class="dropdown-item" href="<%= edit_user_path(current_user) %>">設定</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                       <%= form_with url: logout_path, method: :delete do %>
@@ -42,7 +41,13 @@
                             </li>
                         <% else %>
                             <li class="nav-item">
+                                <a class="nav-link" href="<%= about_path %>">使い方</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="<%= login_path %>">ログイン</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%= signup_path %>">新規登録</a>
                             </li>
                         <% end %>
                     </ul>

@@ -6,15 +6,15 @@
         <h1><%= @post.title %></h1>
         <p><%= simple_format(@post.content) %></p>
         <% if logged_in? %>
-          <% if current_user && current_user == @post.user %>
-            <%= form_with url: post_path, method: :delete do %>
-              <%= submit_tag "削除", class: "btn btn-primary" %>
-            <% end %>
+          <% if @post.user %>
+            <% if current_user && current_user == @post.user %>
+              <%= form_with url: post_path, method: :delete do %>
+                <%= submit_tag "削除", class: "btn btn-primary" %>
+              <% end %>
             <% elsif !FriendRequest.where(sender: current_user, post: @post).exists? && !current_user.friends.include?(@post.user) %>
               <%= form_with url: friend_requests_path, method: :post do %>
                 <%= hidden_field_tag :post_id, @post.id %>
-                <%= button_tag type: "submit",
-                               class: "btn btn-primary rounded-pill px-4 hover-scale" do %>
+                <%= button_tag type: "submit", class: "btn btn-primary rounded-pill px-4 hover-scale" do %>
                   フレンドリクエストを送る
                 <% end %>
               <% end %>
@@ -22,6 +22,9 @@
               <%= link_to "#{@post.user.name}の投稿", user_path(@post.user), class: "btn btn-outline-primary rounded-pill px-4" %>
             <% else %>
               <span class="badge bg-secondary rounded-pill px-4 py-2">リクエスト済み</span>
+            <% end %>
+          <% else %>
+            <span class="badge bg-secondary rounded-pill px-4 py-2">匿名ユーザーによる投稿</span>
           <% end %>
         <% end %>
       </div>
