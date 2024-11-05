@@ -15,6 +15,12 @@
           <%= f.text_area :content, rows: 8, class: "form-control" %>
         </div>
 
+        <p class="text-muted mb-4">
+          公序良俗に反する投稿はお控えください。投稿すると
+          <%= link_to "利用規約", terms_path, target: "_blank" %>
+          に同意したこととみなします。
+        </p>
+
         <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 
       <% end %>

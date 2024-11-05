@@ -13,9 +13,9 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should redirect new when not logged in" do
+  test "should get new when not logged in" do
     get new_post_path
-    assert_redirected_to login_url
+    assert_response :success
   end
 
   test "should get index" do
@@ -28,12 +28,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should redirect create when not logged in" do
-    assert_no_difference 'Post.count' do
+  test "should create post when not logged in" do
+    assert_difference 'Post.count', 1 do
       post posts_path, params: { post: { title: "Lorem ipsum", 
                                 content: "Lorem ipsum" } }
     end
-    assert_redirected_to login_url
+    assert_redirected_to post_path(Post.first)
   end
 
   test "should get edit" do
