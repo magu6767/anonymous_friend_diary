@@ -7,8 +7,8 @@
     <%= will_paginate @posts, class: 'justify-content-center' %>
   </div>
 </div>
-<div class="fixed-bottom mb-3 me-3" style="text-align: right;">
-  <%= link_to new_post_path, class: "btn btn-primary" do %>
-    <i class="bi bi-plus-lg"></i> +
+<div class="fixed-bottom mb-4 me-4" style="text-align: right;">
+  <%= link_to new_post_path, class: "btn btn-primary rounded-circle p-3 shadow-lg", style: "width: 65px; height: 65px;" do %>
+    <i class="bi bi-plus-lg fs-4"></i>
   <% end %>
 </div>
