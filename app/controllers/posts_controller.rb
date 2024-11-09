@@ -60,7 +60,7 @@ class PostsController < ApplicationController
 
   def correct_post
     @post = Post.find(params[:id])
-    unless @post.user == current_user
+    unless @post.user == current_user || current_user.admin?
       flash[:alert] = "この投稿を編集または削除する権限がありません。"
       redirect_to root_url
     end
