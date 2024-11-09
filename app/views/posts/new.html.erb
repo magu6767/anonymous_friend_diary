@@ -18,9 +18,13 @@
         <p class="text-muted mb-4">
           公序良俗に反する投稿はお控えください。投稿すると
           <%= link_to "利用規約", terms_path, target: "_blank" %>
-          に同意したこととみなします。
+          に同意したとみなされます。
         </p>
-
+        <% unless logged_in? %>
+          <div class="alert alert-info mt-3" role="alert">
+            <%= link_to "ユーザー登録", signup_path %>をすると、あなたの投稿を気に入ったユーザーからリクエストを受け取れるようになります
+          </div>
+        <% end %>
         <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 
       <% end %>

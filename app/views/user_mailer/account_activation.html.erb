@@ -1,9 +1,9 @@
-<h1>アカウント有効化</h1>
+<h1>アカウント有効化のお知らせ</h1>
 
-<p>Hi <%= @user.name %>様、</p>
+<p><%= @user.name %>様、</p>
 
 <p>
 匿名フレンドへようこそ！アカウントを有効化するには、以下のリンクをクリックしてください：</p>
 
-<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+<%= link_to "アカウントを有効化する", edit_account_activation_url(@user.activation_token,
                                                     email: @user.email) %>

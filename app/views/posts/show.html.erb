@@ -14,10 +14,13 @@
             <% elsif !FriendRequest.where(sender: current_user, post: @post).exists? && !current_user.friends.include?(@post.user) %>
               <%= form_with url: friend_requests_path, method: :post do %>
                 <%= hidden_field_tag :post_id, @post.id %>
-                <%= button_tag type: "submit", class: "btn btn-primary rounded-pill px-4 hover-scale" do %>
+                <%= button_tag type: "submit", class: "btn btn-primary px-4 hover-scale" do %>
                   フレンドリクエストを送る
                 <% end %>
               <% end %>
+              <div class="alert alert-info small mt-3" role="alert">
+                リクエストが承認されると、このユーザーの他の投稿を見ることができます！
+              </div>
             <% elsif current_user.friends.include?(@post.user) %>
               <%= link_to "#{@post.user.name}の投稿", user_path(@post.user), class: "btn btn-outline-primary rounded-pill px-4" %>
             <% else %>
@@ -26,6 +29,11 @@
           <% else %>
             <span class="badge bg-secondary rounded-pill px-4 py-2">匿名ユーザーによる投稿</span>
           <% end %>
+        <% else %>
+          <div class="alert alert-info small" role="alert">
+            <%= link_to "ログイン", login_path %>するとフレンドリクエストを送ることができます。<br>
+            リクエストが承認されると、このユーザーの他の投稿を見ることができます！
+          </div>
         <% end %>
       </div>
     </div>

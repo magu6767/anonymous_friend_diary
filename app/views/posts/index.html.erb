@@ -1,7 +1,14 @@
 <div class="row justify-content-center py-4">
   <div class="col-md-8">
+    <div class="d-flex justify-content-between mb-3">
+      <h2>投稿一覧</h2>
+    </div>
     <%= render @posts %>
     <%= will_paginate @posts, class: 'justify-content-center' %>
   </div>
 </div>
-
+<div class="fixed-bottom mb-3 me-3" style="text-align: right;">
+  <%= link_to new_post_path, class: "btn btn-primary" do %>
+    <i class="bi bi-plus-lg"></i> +
+  <% end %>
+</div>
