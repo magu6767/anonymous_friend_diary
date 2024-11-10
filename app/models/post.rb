@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  include Hashid::Rails
   belongs_to :user, optional: true
   has_many :request, class_name: 'FriendRequest', foreign_key: 'post_id', dependent: :destroy
 

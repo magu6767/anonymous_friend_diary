@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   resources :posts
   resources :friend_requests
   resources :friendships, only: [:index, :show, :create, :destroy]
+  match '*path', to: 'application#render_404', via: :all
 end
