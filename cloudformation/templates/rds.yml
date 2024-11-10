@@ -41,6 +41,9 @@ Resources:
         - !Ref DbSecurityGroupId
       StorageEncrypted: true
       DeletionProtection: true
+      ServerlessV2ScalingConfiguration: 
+        MaxCapacity: 1.5
+        MinCapacity: 0.5
       Tags:
         - Key: 'Name'
           Value: !Sub 'anf-${EnvironmentName}-aurora-cluster'
@@ -59,7 +62,7 @@ Resources:
     Properties:
       Engine: 'aurora-mysql'
       DBClusterIdentifier: !Ref AnfAuroraCluster
-      DBInstanceClass: 'db.t4g.medium'
+      DBInstanceClass: db.serverless
       PubliclyAccessible: false
       Tags:
         - Key: 'Name'
