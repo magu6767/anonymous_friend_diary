@@ -4,7 +4,7 @@
       <h2>投稿一覧</h2>
     </div>
     <%= render @posts %>
-    <%= will_paginate @posts, class: 'justify-content-center' %>
+    <%= will_paginate @posts, class: 'justify-content-center', previous_label: '前の20件', next_label: '次の20件', page_links: false %>
   </div>
 </div>
 <div class="fixed-bottom mb-4 me-4" style="text-align: right;">

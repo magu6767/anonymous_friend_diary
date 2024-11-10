@@ -22,7 +22,7 @@
         </p>
         <% unless logged_in? %>
           <div class="alert alert-info mt-3" role="alert">
-            <%= link_to "ユーザー登録", signup_path %>をすると、あなたの投稿を気に入ったユーザーからリクエストを受け取れるようになります
+            <%= link_to "ユーザー登録", signup_path %>をすると、あなたの投稿を気に入ったユーザーからフレンドリクエストを受け取れるようになります
           </div>
         <% end %>
         <%= f.submit yield(:button_text), class: "btn btn-primary" %>

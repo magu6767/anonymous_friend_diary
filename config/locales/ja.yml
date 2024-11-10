@@ -11,8 +11,20 @@ ja:
         name: 名前
         email: メールアドレス
         password: パスワード
+        password_confirmation: パスワードの確認
     errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: は既に使用されています
+            name:
+              taken: は既に使用されています
+            password_confirmation:
+              confirmation: "がパスワードと一致しません"
       messages:
         blank: を入力してください
         too_long: は%{count}文字以内で入力してください
         too_short: は%{count}文字以上で入力してください
+        taken: "は既に使用されています"
+        confirmation: "が一致しません"
