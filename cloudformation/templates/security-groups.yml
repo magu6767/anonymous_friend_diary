@@ -60,20 +60,6 @@ Resources:
         - Key: 'Name'
           Value: !Sub 'anf-${EnvironmentName}-web-sg'
 
-  DbSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupDescription: 'Security group for Aurora DB'
-      VpcId: !Ref VpcId
-      SecurityGroupIngress:
-        - IpProtocol: 'tcp'
-          FromPort: 3306
-          ToPort: 3306
-          SourceSecurityGroupId: !Ref WebSecurityGroup
-      Tags:
-        - Key: 'Name'
-          Value: !Sub 'anf-${EnvironmentName}-db-sg'
-
 Outputs:
   ElbSecurityGroupId:
     Description: 'ELB Security Group ID'
@@ -82,7 +68,3 @@ Outputs:
   WebSecurityGroupId:
     Description: 'Web Security Group ID'
     Value: !Ref WebSecurityGroup
-
-  DbSecurityGroupId:
-    Description: 'DB Security Group ID'
-    Value: !Ref DbSecurityGroup

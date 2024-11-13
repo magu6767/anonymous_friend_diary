@@ -17,16 +17,6 @@ Parameters:
   HostedZoneId:
     Type: String
     Description: 'Route53の該当ドメインのホストゾーンID（要事前設定）'
-  
-  DBUsername:
-    Type: String
-    Description: 'DB Username'
-    NoEcho: true
-
-  DBPassword:
-    Type: String
-    Description: 'DB Password'
-    NoEcho: true
 
 Resources:
   VPCStack:
@@ -84,15 +74,3 @@ Resources:
         HostedZoneId: !Ref HostedZoneId
         LoadBalancerDNSName: !GetAtt ALBStack.Outputs.LoadBalancerDNSName
         AlbCanonicalHostedZoneID: !GetAtt ALBStack.Outputs.AlbCanonicalHostedZoneID
-
-  RDSStack:
-    Type: 'AWS::CloudFormation::Stack'
-    Properties:
-      TemplateURL: 'https://anf-cloudfomation.s3.ap-northeast-1.amazonaws.com/templates/rds.yml'
-      Parameters:
-        EnvironmentName: !Ref EnvironmentName
-        VpcId: !GetAtt VPCStack.Outputs.VpcId
-        PrivateSubnetIds: !GetAtt VPCStack.Outputs.PrivateSubnetIds
-        DbSecurityGroupId: !GetAtt SecurityGroupsStack.Outputs.DbSecurityGroupId
-        DBUsername: !Ref DBUsername
-        DBPassword: !Ref DBPassword
