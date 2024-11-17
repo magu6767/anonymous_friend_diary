@@ -20,7 +20,7 @@ Parameters:
 
   EC2InstanceType:
     Type: String
-    Default: 't3a.nano'
+    Default: 't3a.small'
     Description: 'EC2 instance type'
 
   EC2AMIId:
