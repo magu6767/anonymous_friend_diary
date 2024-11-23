@@ -1,19 +1,17 @@
-require "test_helper"
+require 'test_helper'
 
 class FriendRequestsControllerTest < ActionDispatch::IntegrationTest
-
-  test "should redirect create when not logged in" do
+  test 'should redirect create when not logged in' do
     assert_no_difference 'FriendRequest.count' do
       post friend_requests_path
     end
     assert_redirected_to login_url
   end
 
-  test "should redirect destroy when not logged in" do
+  test 'should redirect destroy when not logged in' do
     assert_no_difference 'FriendRequest.count' do
       delete friend_request_path(friend_requests(:for_delete_user_request))
     end
     assert_redirected_to login_url
   end
-
 end

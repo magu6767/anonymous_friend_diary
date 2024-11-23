@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class FriendshipsIndexTest < ActionDispatch::IntegrationTest
   def setup
@@ -6,10 +6,10 @@ class FriendshipsIndexTest < ActionDispatch::IntegrationTest
     @users_friend = users(:four)
   end
 
-  test "should get index with friend`s path" do
+  test 'should get index with friend`s path' do
     log_in_as @user
     get friendships_path
     assert_response :success
-    assert_select "a[href=?]", user_path(@users_friend)
+    assert_select 'a[href=?]', user_path(@users_friend)
   end
 end

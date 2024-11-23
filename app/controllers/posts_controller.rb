@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :destroy]
-  before_action :correct_post,   only: [:edit, :update, :destroy]
+  before_action :logged_in_user, only: %i[edit update destroy]
+  before_action :correct_post,   only: %i[edit update destroy]
 
   def index
-    @posts = Post.paginate(page: params[:page], per_page: 20)
+    @posts = Post.roots.paginate(page: params[:page], per_page: 20)
   end
 
   def show
@@ -26,7 +26,7 @@ class PostsController < ApplicationController
             end
 
     if @post.save
-      flash[:success] = "投稿が完了しました!"
+      flash[:success] = '投稿が完了しました!'
       redirect_to @post
     else
       render 'new', status: :unprocessable_entity
@@ -39,7 +39,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      flash[:success] = "更新が完了しました!"
+      flash[:success] = '更新が完了しました!'
       redirect_to @post
     else
       render 'edit', status: :unprocessable_entity
@@ -48,7 +48,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    flash[:success] = "投稿が削除されました"
+    flash[:success] = '投稿が削除されました'
     redirect_to posts_url, status: :see_other
   end
 
@@ -60,9 +60,9 @@ class PostsController < ApplicationController
 
   def correct_post
     @post = Post.find(params[:id])
-    unless @post.user == current_user || current_user.admin?
-      flash[:alert] = "この投稿を編集または削除する権限がありません。"
-      redirect_to root_url
-    end
+    return if @post.user == current_user || current_user.admin?
+
+    flash[:alert] = 'この投稿を編集または削除する権限がありません。'
+    redirect_to root_url
   end
 end

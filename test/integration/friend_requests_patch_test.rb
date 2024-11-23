@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class FriendRequestsPatchTest < ActionDispatch::IntegrationTest
   def setup
@@ -7,7 +7,7 @@ class FriendRequestsPatchTest < ActionDispatch::IntegrationTest
     @received_friend_requests = @user.received_friend_requests
   end
 
-  test "approve friend requests and create friendships" do
+  test 'approve friend requests and create friendships' do
     log_in_as(@user)
     get friend_requests_path
 
@@ -16,10 +16,9 @@ class FriendRequestsPatchTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to friend_requests_path
     assert_not flash.empty?
-
   end
 
-  test "reject friend requests" do
+  test 'reject friend requests' do
     log_in_as(@user)
     get friend_requests_path
 
@@ -29,10 +28,9 @@ class FriendRequestsPatchTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to friend_requests_path
     assert_not flash.empty?
-
   end
 
-  test "cancel friend requests" do
+  test 'cancel friend requests' do
     log_in_as(@user)
     get friend_requests_path
 
@@ -42,6 +40,5 @@ class FriendRequestsPatchTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to friend_requests_path
     assert_not flash.empty?
-
   end
 end

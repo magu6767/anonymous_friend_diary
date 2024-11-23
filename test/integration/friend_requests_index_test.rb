@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class FriendRequestsIndexTest < ActionDispatch::IntegrationTest
   def setup
@@ -7,7 +7,7 @@ class FriendRequestsIndexTest < ActionDispatch::IntegrationTest
     @received_friend_requests = @user.received_friend_requests
   end
 
-  test "should get friend requests index" do
+  test 'should get friend requests index' do
     log_in_as(@user)
 
     get friend_requests_path
@@ -22,10 +22,9 @@ class FriendRequestsIndexTest < ActionDispatch::IntegrationTest
         assert_select 'a[href=?]', post_path(r_request.post), text: r_request.post.title
       end
     end
-
   end
 
-  test "should redirect friend requests index when not logged in" do
+  test 'should redirect friend requests index when not logged in' do
     get friend_requests_path
     assert_redirected_to login_url
   end

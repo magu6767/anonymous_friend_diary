@@ -4,10 +4,10 @@ module SessionsHelper
   end
 
   def current_user
-    if session[:user_id]
-      # @current_userがnilの場合、Userモデルからユーザーを取得する
-      @current_user ||= User.find_by(id: session[:user_id])
-    end
+    return unless session[:user_id]
+
+    # @current_userがnilの場合、Userモデルからユーザーを取得する
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   # 渡されたユーザーがカレントユーザーであればtrueを返す
@@ -23,13 +23,13 @@ module SessionsHelper
   # 現在のユーザーをログアウトする
   def log_out
     reset_session
-    @current_user = nil   # 安全のため
+    @current_user = nil # 安全のため
   end
 
   # アクセスしようとしたURLを保存する
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
-  end 
+  end
 
   # 正しいユーザーかどうか確認
   def correct_user

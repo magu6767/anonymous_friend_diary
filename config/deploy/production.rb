@@ -7,8 +7,6 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-
-
 # role-based syntax
 # ==================
 
@@ -21,8 +19,6 @@
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -30,8 +26,6 @@
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================
@@ -59,14 +53,14 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-server 'anf-ec2', user: 'ec2-user', roles: %w{app db web}
+server 'anf-ec2', user: 'ec2-user', roles: %w[app db web]
 
 set :ssh_options, {
-  keys: %w(~/.ssh/anonymous-app-key.pem ~/.ssh/id_ecdsa),
+  keys: %w[~/.ssh/anonymous-app-key.pem ~/.ssh/id_ecdsa],
   forward_agent: true,
-  auth_methods: %w(publickey),
+  auth_methods: %w[publickey],
   verify_host_key: :never
 }
 
 # GitHub用の認証設定を追加
-set :git_ssh_command, "ssh -o ForwardAgent=yes"
+set :git_ssh_command, 'ssh -o ForwardAgent=yes'

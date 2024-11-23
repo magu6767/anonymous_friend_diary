@@ -1,7 +1,7 @@
 class Friendship < ApplicationRecord
   belongs_to :user1, class_name: 'User'
   belongs_to :user2, class_name: 'User'
-  
+
   # friend_requestとfriendshipを独立させるため、関連は持たせないことに
   # has_one :friend_request, dependent: :destroy
 

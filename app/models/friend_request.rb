@@ -8,11 +8,10 @@ class FriendRequest < ApplicationRecord
 
   enum status: { pending: 0, accepted: 1, rejected: 2 }
 
-  validates :sender_id, uniqueness: { scope: [:receiver_id, :post_id] }
+  validates :sender_id, uniqueness: { scope: %i[receiver_id post_id] }
   validate :not_self
   validate :not_friends
   validate :invalid_post
-
 
   def accepted?
     status == 'accepted'

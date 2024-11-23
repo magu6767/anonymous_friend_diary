@@ -9,7 +9,9 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :sent_friend_requests, class_name: 'FriendRequest', foreign_key: 'sender_id', dependent: :destroy
-  has_many :received_friend_requests, -> { where(status: [:pending, :accepted]) }, class_name: 'FriendRequest', foreign_key: 'receiver_id', dependent: :destroy
+  has_many :received_friend_requests, lambda {
+    where(status: %i[pending accepted])
+  }, class_name: 'FriendRequest', foreign_key: 'receiver_id', dependent: :destroy
   # 送信者（user1）として関与している友達関係のリスト
   has_many :friendships1, class_name: 'Friendship', foreign_key: 'user1_id', dependent: :destroy
   # 受信者（user2）として関与している友達関係のリスト
@@ -32,14 +34,17 @@ class User < ApplicationRecord
   end
 
   # 渡された文字列のハッシュ値を返す
-  def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
+  def self.digest(string)
+    cost = if ActiveModel::SecurePassword.min_cost
+             BCrypt::Engine::MIN_COST
+           else
+             BCrypt::Engine.cost
+           end
     BCrypt::Password.create(string, cost: cost)
   end
 
   # ランダムなトークンを返す
-  def User.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
@@ -47,6 +52,7 @@ class User < ApplicationRecord
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -60,7 +66,7 @@ class User < ApplicationRecord
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end
-  
+
   # パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
@@ -80,14 +86,14 @@ class User < ApplicationRecord
 
   private
 
-    # メールアドレスをすべて小文字にする
-    def downcase_email
-      self.email = email.downcase
-    end
+  # メールアドレスをすべて小文字にする
+  def downcase_email
+    self.email = email.downcase
+  end
 
-    # 有効化トークンとダイジェストを作成および代入する
-    def create_activation_digest
-      self.activation_token  = User.new_token
-      self.activation_digest = User.digest(activation_token)
-    end
+  # 有効化トークンとダイジェストを作成および代入する
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
 end

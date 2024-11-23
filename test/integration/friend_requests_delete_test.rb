@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class FriendRequestsDeleteTest < ActionDispatch::IntegrationTest
   def setup
@@ -6,7 +6,7 @@ class FriendRequestsDeleteTest < ActionDispatch::IntegrationTest
     @friend_request = friend_requests(:for_delete_user_request)
   end
 
-  test "should delete friend request" do
+  test 'should delete friend request' do
     log_in_as(@user)
     get friend_requests_path
     assert_difference 'FriendRequest.count', -1 do
