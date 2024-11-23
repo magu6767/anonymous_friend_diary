@@ -40,4 +40,10 @@ class PostTest < ActiveSupport::TestCase
     assert_equal posts(:most_recent), Post.first
   end
 
+  test "should save comment with no title" do
+    @post.save
+    comment = @post.children.build(title: nil, content: "This is a test comment.", user: @user)
+    assert comment.save, "failed to save the comment with no title"
+  end
+
 end

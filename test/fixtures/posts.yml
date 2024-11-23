@@ -53,6 +53,13 @@ for_delete_post:
   created_at: <%= 1.days.ago %>
   user: for_delete_user_2
 
+orange_comment:
+  title: null
+  content: "オレンジの投稿に同意します。"
+  created_at: <%= 5.minutes.ago %>
+  user: two
+  ancestry: orange
+
 <% 30.times do |n| %>
 test_post_<%= n %>:
   title: <%= Faker::Lorem.sentence(word_count: 20) %>

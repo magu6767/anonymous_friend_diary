@@ -75,6 +75,8 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     airbrussh (1.5.3)
       sshkit (>= 1.6.1, != 1.7.0)
+    ancestry (4.3.3)
+      activerecord (>= 5.2.6)
     ansi (1.5.0)
     ast (2.4.2)
     backport (1.2.0)
@@ -384,6 +386,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations (= 0.9.8)
+  ancestry
   bcrypt (= 3.1.18)
   bootsnap (= 1.16.0)
   capistrano

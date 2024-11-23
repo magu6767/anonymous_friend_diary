@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_04_102104) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_23_093046) do
   create_table "friend_requests", force: :cascade do |t|
     t.integer "sender_id", null: false
     t.integer "receiver_id", null: false
@@ -37,6 +37,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_04_102104) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_posts_on_ancestry"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
