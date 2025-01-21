@@ -6,6 +6,5 @@ class Post < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
   validates :title, presence: true
   validates :content, presence: true, length: { maximum: 20000 }
-  # コメントに関するスコープをコメントアウト
-  # scope :with_comments, -> { joins(:comments).distinct }
+  scope :with_comments, -> { joins(:comments).distinct }
 end
