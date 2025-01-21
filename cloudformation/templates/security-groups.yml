@@ -13,7 +13,7 @@ Parameters:
   AllowedSSHLocation:
     Type: String
     Description: 'CIDR block allowed to SSH to EC2 instances'
-    Default: '57.180.17.58/32' #fumidaiのIPを指定
+    Default: '18.183.57.55/32' #fumidaiのIPを指定
 
 Resources:
   ElbSecurityGroup:
